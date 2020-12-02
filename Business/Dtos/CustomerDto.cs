@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 using System.Text;
 
-namespace MajoliFE.Data.Data
+namespace MajoliFE.Business.Dtos
 {
-	[Table("Customers")]
-	public class Customer : BaseEntity
+	public class CustomerDto : BaseDto
 	{
 		public string Name { get; set; }
 		public string Street { get; set; }

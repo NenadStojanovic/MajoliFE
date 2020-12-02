@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using MajoliFE.Business.Interfaces;
 using MajoliFE.Business.Services;
+using AutoMapper;
 
 namespace MajoliFE.Business
 {
@@ -17,13 +18,13 @@ namespace MajoliFE.Business
 			services.AddScoped<ICustomerService, CustomerService>();
 
 
-			//var mapperConfiguration = new MapperConfiguration(mc =>
-			//{
-			//	mc.AddProfile(new MapperProfiler());
-			//});
+			var mapperConfiguration = new MapperConfiguration(mc =>
+			{
+				mc.AddProfile(new MapperProfile());
+			});
 
-			//IMapper mapper = mapperConfiguration.CreateMapper();
-			//services.AddSingleton(mapper);
+			IMapper mapper = mapperConfiguration.CreateMapper();
+			services.AddSingleton(mapper);
 
 			//services.AddLocalization(options => options.ResourcesPath = "Infrastructure/Resources");
 

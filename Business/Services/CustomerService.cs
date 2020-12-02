@@ -1,4 +1,6 @@
-﻿using MajoliFE.Business.Interfaces;
+﻿using AutoMapper;
+using MajoliFE.Business.Dtos;
+using MajoliFE.Business.Interfaces;
 using MajoliFE.Data.Data;
 using MajoliFE.Data.Interfaces;
 using System;
@@ -10,21 +12,24 @@ namespace MajoliFE.Business.Services
 	class CustomerService : ICustomerService
 	{
 		private ICustomerRepository _customerRepository;
-
-		public CustomerService(ICustomerRepository customerRepository)
+		private readonly IMapper _mapper;
+		public CustomerService(ICustomerRepository customerRepository, IMapper mapper)
 		{
 			_customerRepository = customerRepository;
+			_mapper = mapper;
 		}
 
-		public void CreateCustomer(Customer customer)
+		public void CreateCustomer(CustomerDto customer)
 		{
-			_customerRepository.Create(customer);
+			_customerRepository.Create(_mapper.Map<Customer>(customer));
 			_customerRepository.SaveChanges();
 		}
 
-		public IEnumerable<Customer> GetAllCustomers()
+		public IEnumerable<CustomerDto> GetAllCustomers()
 		{
-			return _customerRepository.GetAll();
+			var result = _customerRepository.GetAll();
+			var mappedResult = _mapper.Map<IEnumerable<CustomerDto>>(result);
+			return mappedResult;
 		}
 	}
 }

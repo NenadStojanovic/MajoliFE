@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using MajoliFE.Infrastructure.Middleware;
+using MajoliFE.Infrastructure;
 
 namespace MajoliFE
 {
@@ -35,9 +36,13 @@ namespace MajoliFE
 			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 			services.AddControllersWithViews();
-			services.AddRazorPages();
+			services.AddRazorPages()
+				.AddRazorRuntimeCompilation();
 
 			Business.StartupExtensions.ConfigureServices(services);
+
+			//DI Configurations
+			services.AddScoped<IModelFactory, ModelFactory>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

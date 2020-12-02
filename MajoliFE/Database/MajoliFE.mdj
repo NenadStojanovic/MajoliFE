@@ -319,6 +319,21 @@
 												},
 												{
 													"_type": "ERDColumnView",
+													"_id": "AAAAAAF2IJIdEDyERKA=",
+													"_parent": {
+														"$ref": "AAAAAAF2G4Iww6sDh1E="
+													},
+													"model": {
+														"$ref": "AAAAAAF2IJIc+TyBPec="
+													},
+													"font": "Arial;13;0",
+													"left": 181,
+													"top": 400,
+													"width": 95.130859375,
+													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
 													"_id": "AAAAAAF2G4sg7Kv6a5Y=",
 													"_parent": {
 														"$ref": "AAAAAAF2G4Iww6sDh1E="
@@ -328,7 +343,7 @@
 													},
 													"font": "Arial;13;0",
 													"left": 181,
-													"top": 400,
+													"top": 415,
 													"width": 95.130859375,
 													"height": 13
 												},
@@ -343,7 +358,7 @@
 													},
 													"font": "Arial;13;0",
 													"left": 181,
-													"top": 415,
+													"top": 430,
 													"width": 95.130859375,
 													"height": 13
 												},
@@ -358,7 +373,7 @@
 													},
 													"font": "Arial;13;0",
 													"left": 181,
-													"top": 430,
+													"top": 445,
 													"width": 95.130859375,
 													"height": 13
 												}
@@ -367,14 +382,14 @@
 											"left": 176,
 											"top": 335,
 											"width": 105.130859375,
-											"height": 113
+											"height": 128
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 176,
 									"top": 312,
 									"width": 105.130859375,
-									"height": 136,
+									"height": 151,
 									"nameLabel": {
 										"$ref": "AAAAAAF2G4Iww6sCd/4="
 									},
@@ -934,6 +949,15 @@
 										"$ref": "AAAAAAF2G4Iww6r/1Rk="
 									},
 									"name": "City",
+									"length": 0
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAF2IJIc+TyBPec=",
+									"_parent": {
+										"$ref": "AAAAAAF2G4Iww6r/1Rk="
+									},
+									"name": "ZIP",
 									"length": 0
 								},
 								{
