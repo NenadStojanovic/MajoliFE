@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MajoliFE.Models
 {
-	public class CustomersViewModel
+	public class CustomersViewModel : BaseViewModel
 	{
 		public IEnumerable<CustomerDto> Customers { get; set; }
 	}

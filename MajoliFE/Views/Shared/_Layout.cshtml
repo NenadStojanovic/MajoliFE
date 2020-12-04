@@ -34,6 +34,9 @@
 
 	<!-- Custom Theme Style -->
 	<link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+
+	<!-- Custom Style -->
+	<link href="~/lib/alertifyjs/css/alertify.css" rel="stylesheet">
 </head>
 
 
@@ -74,7 +77,7 @@
 										<li><a href="index2.html">Dashboard2</a></li>
 										<li><a href="index3.html">Dashboard3</a></li>
 									</ul>
-									
+
 								</li>
 								<li>
 									<a href="@Url.Action("Customers","Home")"><i class="fa fa-user"></i> Klijenti </a>
@@ -191,6 +194,14 @@
 	<!-- Custom Theme Scripts -->
 	<script src="~/Content/src/js/helpers/smartresize.js"></script>
 	<script src="~/Content/build/js/custom.min.js"></script>
+
+
+
+	<!-- Custom Scripts -->
+
+	<script src="~/lib/alertifyjs/alertify.min.js"></script>
+	<script src="~/lib/blockUI/jquery.blockUI.js"></script>
+
 
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@RenderSection("Scripts", required: false)

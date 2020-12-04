@@ -25,10 +25,23 @@ namespace MajoliFE.Business.Services
 			_customerRepository.SaveChanges();
 		}
 
+		public void UpdateCustomer(CustomerDto customer)
+		{
+			_customerRepository.Update(customer.Id, _mapper.Map<Customer>(customer));
+			_customerRepository.SaveChanges();
+		}
+
 		public IEnumerable<CustomerDto> GetAllCustomers()
 		{
 			var result = _customerRepository.GetAll();
 			var mappedResult = _mapper.Map<IEnumerable<CustomerDto>>(result);
+			return mappedResult;
+		}
+
+		public CustomerDto GetCustomerById(int customerId)
+		{
+			var result = _customerRepository.Get(customerId);
+			var mappedResult = _mapper.Map<CustomerDto>(result);
 			return mappedResult;
 		}
 	}

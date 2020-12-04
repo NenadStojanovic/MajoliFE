@@ -10,5 +10,9 @@ namespace MajoliFE.Business.Interfaces
 	{
 		public IEnumerable<CustomerDto> GetAllCustomers();
 		public void CreateCustomer(CustomerDto customer);
+
+		public CustomerDto GetCustomerById(int customerId);
+
+		public void UpdateCustomer(CustomerDto customer);
 	}
 }

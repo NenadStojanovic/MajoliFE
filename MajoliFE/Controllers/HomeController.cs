@@ -16,11 +16,13 @@ namespace MajoliFE.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly IModelFactory _modelFactory;
+		private readonly ICustomerService _customerService;
 
-		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory)
+		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory, ICustomerService customerService)
 		{
 			_logger = logger;
 			_modelFactory = modelFactory;
+			_customerService = customerService;
 		}
 
 		public IActionResult Index()
@@ -35,7 +37,42 @@ namespace MajoliFE.Controllers
 		public IActionResult Customers()
 		{
 			var model = _modelFactory.PrepareCustomersVM();
+			model.Customers = model.Customers.OrderByDescending(x => x.Id).ToList();
+			if(TempData["ShowMessage"]!=null)
+			{
+				model.ShowMessage = (bool)TempData["ShowMessage"];
+			}
 			return View(model);
+		}
+
+		[HttpGet]
+		public IActionResult CreateOrUpdateCustomerDialog(int customerId)
+		{
+			var model = new CustomerDto();
+			if(customerId == 0)
+			{
+				return PartialView("_CreateOrUpdateCustomerDialog", model);
+			}
+			else
+			{
+				model = _customerService.GetCustomerById(customerId);
+			}
+			return PartialView("_CreateOrUpdateCustomerDialog", model);
+		}
+
+		[HttpPost]
+		public IActionResult CreateOrUpdateCustomerDialog(CustomerDto customer)
+		{
+			if (customer.Id == 0)
+			{
+				_customerService.CreateCustomer(customer);
+			}
+			else
+			{
+				_customerService.UpdateCustomer(customer);
+			}
+			TempData["ShowMessage"] = true;
+			return RedirectToAction("Customers");
 		}
 
 		public IActionResult Privacy()

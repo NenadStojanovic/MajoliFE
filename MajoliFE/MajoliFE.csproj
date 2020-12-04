@@ -32,11 +32,6 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\Content\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <None Include="wwwroot\Content\build\css\custom.css" />
     <None Include="wwwroot\Content\build\css\custom.min.css" />
     <None Include="wwwroot\Content\build\images\back_disabled.png" />
