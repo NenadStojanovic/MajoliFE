@@ -1,0 +1,300 @@
+﻿@model MajoliFE.Models.CreateOrUpdateInvoiceViewModel
+@{
+	ViewData["Title"] = "Računi";
+}
+
+@*<select class="chosen-select" asp-for="@Model.Invoice.CustomerId" asp-items="@Model.Customers"></select>*@
+<div class="">
+	<div class="page-title">
+		<div class="title_left">
+			<h3>Kreiraj novi račun</h3>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<form class="" id="createOrUpdateInvoiceForm" action="" method="post" novalidate="">
+						<span class="section">Osnovne informacije</span>
+						<div class="col-md-7 col-sm-12">
+							<div class="col-md-6 col-sm-6">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Broj računa<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<input class="form-control" id="invoiceNumber" type="number" value="@Model.Invoice.InvoiceNumber" required="required">
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6 col-sm-6">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum izdavanja<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<input class="form-control datepicker" type="text" id="dateIssued" value="@Model.Invoice.DateIssued.ToString("dd-mm-yyyy")" required="required">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum prometa<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<input class="form-control datepicker" type="text" id="dateOfService" value="@Model.Invoice.DateOfService.ToString("dd-mm-yyyy")" required="required">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6" style="margin-bottom:10px;">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Mesto<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<input class="form-control" id="place" value="@Model.Invoice.Place" required="required">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum valute<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<input class="form-control datepicker" type="text" id="currencyDate" value="@Model.Invoice.CurrencyDate.ToString("dd-mm-yyyy")" required="required">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Broj dana<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<input class="form-control" type="number" id="numOfdays" value="@Model.Invoice.CurrencyDateNumOfDays" required="required">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-12 col-md-offset-1">
+							<div class="col-md-12 col-sm-12" style="margin-bottom:10px;">
+								<div class="field item form-group">
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Kupac<span class="required">*</span></label>
+									<div class="col-md-9 col-sm-9">
+										<select class="chosen-select" style="width:100%;" asp-for="@Model.Invoice.CustomerId" asp-items="@Model.Customers"></select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-9 col-sm-9">
+								<input class="form-control" id="customerName" placeholder="Naziv kupca" value="@Model.Invoice.CustomerName" required>
+							</div>
+							<div class="col-md-3 col-sm-3">
+								<input class="form-control" id="partnerId" placeholder="PartnerId" value="@Model.Invoice.PartnerId" required>
+							</div>
+							<div class="col-md-12 col-sm-12">
+								<textarea class="form-control" id="customerAddress" placeholder="Adresa" required>@Model.Invoice.CustomerAddress</textarea>
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<input class="form-control" id="customerPib" placeholder="PIB" value="@Model.Invoice.CustomerPIB" required>
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<input class="form-control" id="customerMb" placeholder="MB" value="@Model.Invoice.CustomerMB" required>
+							</div>
+
+						</div>
+						<span class="section">Stavke</span>
+						<div class="col-md-12">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>
+											#
+										</th>
+										<th>
+											ID
+										</th>
+										<th>
+											Opis
+										</th>
+										<th>
+											Jed. mere
+										</th>
+										<th>
+											Količina
+										</th>
+										<th>
+											Cena bez popusta i PDV-a
+										</th>
+										<th>
+											Popust %
+										</th>
+										<th>
+											Cena bez PDV-a
+										</th>
+										<th>
+											Osnovica
+										</th>
+										<th>
+											%
+										</th>
+										<th>
+											Iznos
+										</th>
+										<th>
+											Iznos sa PDV-om
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+								@if (Model.Invoice.InvoiceItems != null && Model.Invoice.InvoiceItems.Count() > 0)
+								{
+									
+										@for (int i = 0; i < Model.Invoice.InvoiceItems.Count(); i++)
+										{
+										<tr>
+											<td>@i</td>
+											<td>@Model.Invoice.InvoiceItems[i].ItemId</td>
+											<td>@Model.Invoice.InvoiceItems[i].Name</td>
+											<td>@Model.Invoice.InvoiceItems[i].Unit</td>
+											<td>@Model.Invoice.InvoiceItems[i].Quantity</td>
+											<td>@Model.Invoice.InvoiceItems[i].Price.ToString("F2")</td>
+											<td>0</td>
+											<td>@Model.Invoice.InvoiceItems[i].Price.ToString("F2")</td>
+											<td>@Model.Invoice.InvoiceItems[i].TotalWithoutPDV.ToString("F2")</td>
+											<td>@Model.Settings.PDV</td>
+											<td>@Model.Invoice.InvoiceItems[i].GetPdvValue(@Model.Settings.PDV).ToString("F2")</td>
+											<td>@Model.Invoice.InvoiceItems[i].GetTotalValue(@Model.Settings.PDV).ToString("F2")</td>
+										</tr>
+										}
+										
+									
+								}
+								else
+								{
+									<td colspan="12" style="text-align:center; font-size:20px">
+										Nema podataka
+									</td>
+								}
+								</tbody>
+							</table>
+						</div>
+						<span class="section">Sumirano</span>
+						<div class="col-md-12">
+							<div class="col-md-5">
+								<div>
+									<h4>Rekapitulacija poreza</h4>
+								</div>
+								<table class="table">
+									<thead>
+										<tr>
+											<td>Tarifa</td>
+											<td>Osnovica</td>
+											<td>Porez</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Opšta stopa</td>
+											<td class="tdTotalWithoutPDV"></td>
+											<td class="tdPDV"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-6 col-sm-12 col-md-offset-1">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>
+												Ukupno bez popusta i PDV-a:
+											</td>
+											<td class="tdTotalWithoutPDV">
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Popust:
+											</td>
+											<td id="tdDiscount">
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Osnovica za PDV:
+											</td>
+											<td class="tdTotalWithoutPDV">
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Razlika za uplatu bez PDV-a:
+											</td>
+											<td class="tdTotalWithoutPDV">
+											</td>
+										</tr>
+										<tr>
+											<td>
+												PDV na razliku za uplatu:
+											</td>
+											<td class="tdPDV">
+												108.400.00
+											</td>
+										<tr style="font-weight:bold;">
+											<td>
+												Ukupno za uplatu sa PDV-om:
+											</td>
+											<td class="tdTotal">
+												108.400.00
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+								<div>
+									<h4>Instrukcije za uplatu:</h4>
+								</div>
+								<table class="table">
+									<thead>
+										<tr>
+											<td>Naziv banke</td>
+											<td>Broj računa</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>@Model.Settings.BankName</td>
+											<td>@Model.Settings.BankAccount</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<span class="section">Napomena</span>
+						<div class="col-md-12">
+							<textarea id="note" style="width:100%;">@Model.Invoice.Note</textarea>
+						</div>
+						<div class="col-md-12 col-sm-12">
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-12 col-sm-12">
+									<button type="button" class="btn btn-warning pull-right">Odustani</button>
+									<button type="submit" class="btn btn-success pull-right">Snimi</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="GetCustomerUrl" value="@Url.Action("GetCustomerById","Home")" />
+<input type="hidden" id="baseTotalHidden" value="0" />
+<input type="hidden" id="totalHidden" value="0" />
+<input type="hidden" id="pdvHidden" value="0" />
+<input type="hidden" id="isPaidHidden" value="@Model.Invoice.IsPaid" />
+<input type="hidden" id="isIssuedHidden" value="@Model.Invoice.IsIssued" />
+<input type="hidden" id="createOrUpdateInvoiceUrl" value="@Url.Action("CreateOrUpdateInvoice","Home")" />
+<input type="hidden" id="invoicesUrl" value="@Url.Action("Invoices","Home")" />
+<input type="hidden" id="id" value="@Model.Invoice.Id" />
+
+
+
+@section Scripts
+{
+	<script src="~/js/CreateOrUpdateInvoice.js"></script>
+}
+
+

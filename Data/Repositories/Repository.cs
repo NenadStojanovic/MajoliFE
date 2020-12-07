@@ -17,28 +17,28 @@ namespace MajoliFE.Data.Repositories
 			this.dbContext = dbContext;
 		}
 
-		public void Create(TEntity entity)
+		public virtual void Create(TEntity entity)
 		{
 			 dbContext.Set<TEntity>().Add(entity);
 		}
 
-		public void Delete(TEntity entity)
+		public virtual void Delete(TEntity entity)
 		{
 			dbContext.Set<TEntity>().Remove(entity);
 		
 		}
 
-		public IEnumerable<TEntity> GetAll()
+		public virtual IEnumerable<TEntity> GetAll()
 		{
 			return  dbContext.Set<TEntity>().ToList();
 		}
 
-		public TEntity Get(int id)
+		public virtual TEntity GetById(int id)
 		{
 			return  dbContext.Set<TEntity>().Find(id);
 		}
 
-		public void Update(int id, TEntity entity)
+		public virtual void Update(int id, TEntity entity)
 		{
 			dbContext.Set<TEntity>().Update(entity);
 		}

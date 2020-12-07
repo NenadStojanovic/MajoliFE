@@ -9,6 +9,9 @@ using MajoliFE.Models;
 using MajoliFE.Business.Interfaces;
 using MajoliFE.Business.Dtos;
 using MajoliFE.Infrastructure;
+using Microsoft.AspNetCore.Localization;
+using System.Threading;
+using System.Globalization;
 
 namespace MajoliFE.Controllers
 {
@@ -17,19 +20,21 @@ namespace MajoliFE.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly IModelFactory _modelFactory;
 		private readonly ICustomerService _customerService;
+		private readonly IInvoiceService _invoiceService;
 
-		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory, ICustomerService customerService)
+		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory, ICustomerService customerService, IInvoiceService invoiceService)
 		{
 			_logger = logger;
 			_modelFactory = modelFactory;
 			_customerService = customerService;
+			_invoiceService = invoiceService;
 		}
 
 		public IActionResult Index()
 		{
 			//throw new Exception("Test");
 		    //_customerService.CreateCustomer(new CustomerDto { Name = "Pera" });
-			var model = _modelFactory.PrepareCustomersVM();
+			//var model = _modelFactory.PrepareCustomersVM();
 			return View();
 		}
 
@@ -37,7 +42,6 @@ namespace MajoliFE.Controllers
 		public IActionResult Customers()
 		{
 			var model = _modelFactory.PrepareCustomersVM();
-			model.Customers = model.Customers.OrderByDescending(x => x.Id).ToList();
 			if(TempData["ShowMessage"]!=null)
 			{
 				model.ShowMessage = (bool)TempData["ShowMessage"];
@@ -55,7 +59,7 @@ namespace MajoliFE.Controllers
 			}
 			else
 			{
-				model = _customerService.GetCustomerById(customerId);
+				model = _customerService.GetById(customerId);
 			}
 			return PartialView("_CreateOrUpdateCustomerDialog", model);
 		}
@@ -65,11 +69,11 @@ namespace MajoliFE.Controllers
 		{
 			if (customer.Id == 0)
 			{
-				_customerService.CreateCustomer(customer);
+				_customerService.Create(customer);
 			}
 			else
 			{
-				_customerService.UpdateCustomer(customer);
+				_customerService.Update(customer);
 			}
 			TempData["ShowMessage"] = true;
 			return RedirectToAction("Customers");
@@ -84,6 +88,51 @@ namespace MajoliFE.Controllers
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+
+		[HttpGet]
+		public IActionResult Invoices()
+		{
+			var model = _modelFactory.PrepareInvoicesVM();
+			if (TempData["ShowMessage"] != null)
+			{
+				model.ShowMessage = (bool)TempData["ShowMessage"];
+			}
+			return View(model);
+		}
+		[HttpGet]
+		public IActionResult CreateOrUpdateInvoice(int id)
+		{
+			var model = _modelFactory.PrepareCreateOrUpdateInvoiceVM(id);
+			return View(model);
+		}
+
+		[HttpPost]
+		public IActionResult CreateOrUpdateInvoice(InvoiceDto invoice)
+		{
+			if (invoice.Id == 0)
+			{
+				_invoiceService.Create(invoice);
+			}
+			else
+			{
+				_invoiceService.Update(invoice);
+			}
+			return Json("OK");
+		}
+		[HttpGet]
+		public IActionResult GetCustomerById(int customerId)
+		{
+			if(customerId != 0)
+			{
+				var customer = _customerService.GetById(customerId);
+				return Json(customer);
+			}
+			else
+			{
+				return Json(new CustomerDto());
+			}
+			
 		}
 	}
 }

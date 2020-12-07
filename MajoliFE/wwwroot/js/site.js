@@ -2,7 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-
+var successMessage = "Akcija je uspešno izvršena.";
 
 $(document).ready(function () {
 	if ($('#Message').length > 0) {
@@ -12,7 +12,18 @@ $(document).ready(function () {
 	}
 
 	// Display placeholder="" text as tooltip for :focused, non-empty inputs
-	BindPlaceholderTooltips();
+	BindPlaceholderTooltips(); 
+	$('.chosen-select').prepend($('<option>', {
+		value: 0,
+		text: '	Molimo odaberite...'
+	}));
+	$(".chosen-select").chosen();
+
+	$('.datepicker').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		todayBtn: true,
+	});
 });
 
 function BindPlaceholderTooltips() {

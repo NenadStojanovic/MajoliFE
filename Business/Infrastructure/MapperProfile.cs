@@ -12,6 +12,9 @@ namespace MajoliFE.Business
 		public MapperProfile()
 		{
 			CreateMap<Customer, CustomerDto>().ReverseMap();
+			CreateMap<Invoice, InvoiceDto>().ReverseMap();
+			CreateMap<InvoiceItem, InvoiceItemDto>().ReverseMap();
+			CreateMap<Settings, SettingsDto>().ReverseMap();
 		}
 	}
 }

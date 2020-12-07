@@ -9,5 +9,8 @@ namespace MajoliFE.Infrastructure
 	public interface IModelFactory
 	{
 		public CustomersViewModel PrepareCustomersVM();
+		public InvoicesViewModel PrepareInvoicesVM();
+
+		public CreateOrUpdateInvoiceViewModel PrepareCreateOrUpdateInvoiceVM(int customerId);
 	}
 }

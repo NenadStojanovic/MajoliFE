@@ -15,5 +15,6 @@ namespace MajoliFE.Data.Data
 		public string PIB { get; set; }
 		public string MB { get; set; }
 		public string PartnerId { get; set; }
+		public virtual ICollection<Invoice> Invoices { get; set; }
 	}
 }

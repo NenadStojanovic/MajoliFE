@@ -8,11 +8,11 @@ namespace MajoliFE.Business.Interfaces
 {
 	public interface ICustomerService
 	{
-		public IEnumerable<CustomerDto> GetAllCustomers();
-		public void CreateCustomer(CustomerDto customer);
+		public IEnumerable<CustomerDto> GetAll();
+		public void Create(CustomerDto model);
 
-		public CustomerDto GetCustomerById(int customerId);
+		public CustomerDto GetById(int id);
 
-		public void UpdateCustomer(CustomerDto customer);
+		public void Update(CustomerDto model);
 	}
 }

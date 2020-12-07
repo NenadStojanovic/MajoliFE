@@ -21,8 +21,11 @@ namespace MajoliFE.Data
 				options.UseSqlServer(
 					configuration.GetConnectionString("DefaultConnection")));
 			services.AddScoped<ICustomerRepository, CustomerRepository>();
+			services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+			services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
+			services.AddScoped<ISettingsRepository, SettingsRepository>();
 
-		
+
 		}
 	}
 }

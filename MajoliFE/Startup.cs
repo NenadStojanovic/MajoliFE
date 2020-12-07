@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using MajoliFE.Infrastructure.Middleware;
 using MajoliFE.Infrastructure;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace MajoliFE
 {
@@ -43,7 +45,37 @@ namespace MajoliFE
 
 			//DI Configurations
 			services.AddScoped<IModelFactory, ModelFactory>();
+
+			//Localization
+			// Configure supported cultures and localization options
+			services.Configure<RequestLocalizationOptions>(options =>
+			{
+				var supportedCultures = new[]
+				{
+				new CultureInfo("en-US") {
+				DateTimeFormat = {
+                    LongTimePattern = "HH:mm:ss",
+                    ShortTimePattern = "hh:mm tt",
+					ShortDatePattern = "dd/mm/yyyy",
+					FullDateTimePattern =  "dd/mm/yyyy",
+					LongDatePattern = "dd/mm/yyyy"
+				},
+				}
+				};
+
+				// State what the default culture for your application is. This will be used if no specific culture
+				// can be determined for a given request.
+				options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+
+				// You must explicitly state which cultures your application supports.
+				// These are the cultures the app supports for formatting numbers, dates, etc.
+				options.SupportedCultures = supportedCultures;
+
+				// These are the cultures the app supports for UI strings, i.e. we have localized resources for.
+				options.SupportedUICultures = supportedCultures;
+			});
 		}
+	
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -79,3 +111,4 @@ namespace MajoliFE
 		}
 	}
 }
+

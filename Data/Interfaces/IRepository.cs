@@ -10,7 +10,7 @@ namespace MajoliFE.Data.Interfaces
     {
         IEnumerable<TEntity> GetAll();
 
-        TEntity Get(int id);
+        TEntity GetById(int id);
 
         void Create(TEntity entity);
 
