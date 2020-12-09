@@ -91,7 +91,7 @@ function GetInvoiceData() {
 	invoice.CustomerPIB = $("#customerPib").val();
 	invoice.CustomerMB = $("#customerMb").val();
 	invoice.CreatedAt = $("#createdAt").val();
-
+	invoice.InvoiceItems = GetInvoiceItems();
 	return invoice;
 }
 
@@ -115,4 +115,51 @@ function CreateOrUpdateInvoiceItem(id) {
 			$.unblockUI();
 		}
 	});
+}
+
+function AddOrUpdateInvoiceItem(id) {
+	var newRow = '<tr class="hover" id="2" onclick="CreateOrUpdateInvoiceItem(2)">';
+	newRow += '<td>0 <input type="hidden" class="invoiceItemId" value="2"> <input type="hidden" class="invoiceItemCreatedAt" value="28-Nov-20 16:38:35"></td>';
+	newRow += '<td class="itemId">2656259</td>';
+	newRow += '<td class="itemName">Test Spoljna guma 315/70</td>';
+	newRow += '<td class="itemUnit">kom</td>';
+	newRow += '<td class="itemQuantity">4</td>';
+	newRow += '<td class="itemPrice">24700.00</td>';
+	newRow += '<td class="">0</td>';
+	newRow += '<td class="">24700.00</td>';
+	newRow += '<td class="">98800.00</td>';
+	newRow += '<td class="itemPDV">20</td>';
+	newRow += '<td class="">19760.00</td>';
+	newRow += '<td class="">118560.00</td>';
+	newRow += '</tr>'
+	if (id == 0) {
+		$('#invoiceItemsTable > tbody:last-child').append(newRow);
+	}
+	else {
+		var itemRow = '#ItemRow-' + id;
+		$(itemRow).replaceWith(newRow);
+	}
+	$('invoiceItemsTable > .NoDataTr').remove();
+	$('#CreateOrUpdateInvoiceItemDialog').modal('toggle');
+	alertify.notify(successMessage, 'success', 5);
+	//Recalculate invoice
+}
+
+function GetInvoiceItems() {
+	var invoiceItems = [];
+	$('#invoiceItemsTable tbody tr').each((index, tr) => {
+		var invoiceItem = {};
+		invoiceItem.ItemId = $(tr).find(".itemId").html();
+		invoiceItem.Name = $(tr).find(".itemName").html();
+		invoiceItem.Unit = $(tr).find(".itemUnit").html();
+		invoiceItem.Quantity = $(tr).find(".itemQuantity").html();
+		invoiceItem.Price = $(tr).find(".itemPrice").html();
+		invoiceItem.InvoiceId = $('#id').val();
+		invoiceItem.PDVValue = $(tr).find(".itemPDV").html();
+
+		invoiceItem.Id = $(tr).find(".invoiceItemId").val();
+		invoiceItem.CreatedAt = $(tr).find(".invoiceItemCreatedAt").val();
+		invoiceItems.push(invoiceItem);
+	});
+	return invoiceItems;
 }
