@@ -21,13 +21,15 @@ namespace MajoliFE.Controllers
 		private readonly IModelFactory _modelFactory;
 		private readonly ICustomerService _customerService;
 		private readonly IInvoiceService _invoiceService;
+		private readonly IInvoiceItemService _invoiceItemService;
 
-		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory, ICustomerService customerService, IInvoiceService invoiceService)
+		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory, ICustomerService customerService, IInvoiceService invoiceService, IInvoiceItemService invoiceItemService)
 		{
 			_logger = logger;
 			_modelFactory = modelFactory;
 			_customerService = customerService;
 			_invoiceService = invoiceService;
+			_invoiceItemService = invoiceItemService;
 		}
 
 		public IActionResult Index()
@@ -63,6 +65,23 @@ namespace MajoliFE.Controllers
 			}
 			return PartialView("_CreateOrUpdateCustomerDialog", model);
 		}
+
+		[HttpGet]
+		public IActionResult CreateOrUpdateInvoiceItemDialog(int invoiceItemId)
+		{
+			var model = new InvoiceItemDto();
+			if (invoiceItemId == 0)
+			{
+				return PartialView("_CreateOrUpdateInvoiceItemDialog", model);
+			}
+			else
+			{
+				model = _invoiceItemService.GetById(invoiceItemId);
+			}
+			return PartialView("_CreateOrUpdateInvoiceItemDialog", model);
+		}
+
+		
 
 		[HttpPost]
 		public IActionResult CreateOrUpdateCustomerDialog(CustomerDto customer)

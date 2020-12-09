@@ -39,9 +39,8 @@ function BindPlaceholderTooltips() {
 		}
 	});
 }
-
 // unblock when ajax activity stops 
-$.blockUI.defaults.message = '<img class="loaderImg" src="../loaderV3.gif" />';
+$.blockUI.defaults.message = '<img class="loaderImg" src="~/loaderV3.gif" runat="server" />';
 $.blockUI.defaults.overlayCSS.backgroundColor = "#000";
 $.blockUI.defaults.overlayCSS.opacity = 0.5;
 $(document).ajaxStop($.unblockUI); 

@@ -94,9 +94,10 @@
 							</div>
 
 						</div>
-						<span class="section">Stavke</span>
+						<span class="section">Stavke <button type="button" class="btn btn-primary" onclick="CreateOrUpdateInvoiceItem(0)">+</button></span>
+						
 						<div class="col-md-12">
-							<table class="table">
+							<table class="table table-striped jambo_table bulk_action">
 								<thead>
 									<tr>
 										<th>
@@ -143,7 +144,7 @@
 									
 										@for (int i = 0; i < Model.Invoice.InvoiceItems.Count(); i++)
 										{
-										<tr>
+										<tr class="hover" id="@Model.Invoice.InvoiceItems[i].Id" onclick="CreateOrUpdateInvoiceItem(@Model.Invoice.InvoiceItems[i].Id)">
 											<td>@i</td>
 											<td>@Model.Invoice.InvoiceItems[i].ItemId</td>
 											<td>@Model.Invoice.InvoiceItems[i].Name</td>
@@ -280,6 +281,9 @@
 		</div>
 	</div>
 </div>
+<div id="CreateOrUpdateInvoiceItemDialogHolder">
+
+</div>
 <input type="hidden" id="GetCustomerUrl" value="@Url.Action("GetCustomerById","Home")" />
 <input type="hidden" id="baseTotalHidden" value="0" />
 <input type="hidden" id="totalHidden" value="0" />
@@ -287,9 +291,10 @@
 <input type="hidden" id="isPaidHidden" value="@Model.Invoice.IsPaid" />
 <input type="hidden" id="isIssuedHidden" value="@Model.Invoice.IsIssued" />
 <input type="hidden" id="createOrUpdateInvoiceUrl" value="@Url.Action("CreateOrUpdateInvoice","Home")" />
+<input type="hidden" id="createOrUpdateInvoiceItemUrl" value="@Url.Action("CreateOrUpdateInvoiceItemDialog","Home")" />
 <input type="hidden" id="invoicesUrl" value="@Url.Action("Invoices","Home")" />
 <input type="hidden" id="id" value="@Model.Invoice.Id" />
-
+<input type="hidden" id="createdAt" value="@Model.Invoice.CreatedAt" />
 
 
 @section Scripts

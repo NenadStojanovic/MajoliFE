@@ -90,6 +90,29 @@ function GetInvoiceData() {
 	invoice.CustomerAddress = $("#customerAddress").text();
 	invoice.CustomerPIB = $("#customerPib").val();
 	invoice.CustomerMB = $("#customerMb").val();
+	invoice.CreatedAt = $("#createdAt").val();
 
 	return invoice;
+}
+
+function CreateOrUpdateInvoiceItem(id) {
+	$.blockUI();
+	$.ajax({
+		type: "GET",
+		url: $("#createOrUpdateInvoiceItemUrl").val(),
+		data: { invoiceItemId: id },
+		contentType: 'application/json',
+		dataType: "html",
+		success: function (response) {
+			$("#CreateOrUpdateInvoiceItemDialogHolder").html(response);
+			$("#CreateOrUpdateInvoiceItemDialog").modal({ show: true });
+		},
+		error: function (response) {
+			alertify.error('Došlo je do greške.');
+		},
+		complete: function () {
+			BindPlaceholderTooltips();
+			$.unblockUI();
+		}
+	});
 }
