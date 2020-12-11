@@ -13,6 +13,9 @@
 		public float TotalValue { get; set; }
 		public InvoiceDto Invoice { get; set; }
 
+		public int Index { get; set; }
+		public bool IsAdd { get; set; }
+
 		public float GetPdvValue(int pdv)
 		{
 			var result = ((Quantity * Price) / 100) * pdv;

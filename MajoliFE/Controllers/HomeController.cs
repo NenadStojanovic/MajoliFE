@@ -67,9 +67,11 @@ namespace MajoliFE.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult CreateOrUpdateInvoiceItemDialog(int invoiceItemId)
+		public IActionResult CreateOrUpdateInvoiceItemDialog(int invoiceItemId, int index, bool isAdd)
 		{
 			var model = new InvoiceItemDto();
+			model.Index = index;
+			model.IsAdd = isAdd;
 			if (invoiceItemId == 0)
 			{
 				return PartialView("_CreateOrUpdateInvoiceItemDialog", model);
@@ -77,6 +79,9 @@ namespace MajoliFE.Controllers
 			else
 			{
 				model = _invoiceItemService.GetById(invoiceItemId);
+				model.Index = index;
+				model.IsAdd = isAdd;
+
 			}
 			return PartialView("_CreateOrUpdateInvoiceItemDialog", model);
 		}

@@ -95,12 +95,12 @@ function GetInvoiceData() {
 	return invoice;
 }
 
-function CreateOrUpdateInvoiceItem(id) {
+function CreateOrUpdateInvoiceItem(id,index, isAdd) {
 	$.blockUI();
 	$.ajax({
 		type: "GET",
 		url: $("#createOrUpdateInvoiceItemUrl").val(),
-		data: { invoiceItemId: id },
+		data: { invoiceItemId: id, index: index, isAdd:isAdd },
 		contentType: 'application/json',
 		dataType: "html",
 		success: function (response) {
@@ -117,28 +117,47 @@ function CreateOrUpdateInvoiceItem(id) {
 	});
 }
 
-function AddOrUpdateInvoiceItem(id) {
-	var newRow = '<tr class="hover" id="2" onclick="CreateOrUpdateInvoiceItem(2)">';
-	newRow += '<td>0 <input type="hidden" class="invoiceItemId" value="2"> <input type="hidden" class="invoiceItemCreatedAt" value="28-Nov-20 16:38:35"></td>';
-	newRow += '<td class="itemId">2656259</td>';
-	newRow += '<td class="itemName">Test Spoljna guma 315/70</td>';
+function AddOrUpdateInvoiceItem(id, index, IsAdd) {
+	var ind = 0;
+	var date = new Date();
+	var createdAt = date.toLocaleDateString();
+	var pdvBase = $("#pdvValue").val();
+	if (IsAdd) {
+		ind = $(".invoiceItemRow").length+1;
+	}
+	else {
+		ind = index;
+		createdAt = $("#invoiceItemCreatedAt").val();
+	}
+	var quantity =parseFloat($("#invoiceItemQuantity").val());
+	var price = parseFloat($("#invoiceItemPrice").val());
+	var totalWithoutPDV = quantity * price;
+	var pdvValue = ((quantity * price) / 100) * pdvBase;
+	var totalValue = totalWithoutPDV + pdvValue;
+
+
+	var newRow = '<tr class="hover invoiceItemRow" id="ItemRow-' + ind + '" onclick="CreateOrUpdateInvoiceItem(' + id + ',' + ind +',\'false\')">';
+	newRow += '<td>' + ind + ' <input type="hidden" class="invoiceItemId" value="' + id + '"> <input type="hidden" class="invoiceItemCreatedAt" value="' + createdAt +'"></td>';
+	newRow += '<td class="itemId">' + $("#invoiceItemItemId").val()+'</td>';
+	newRow += '<td class="itemName">' + $("#invoiceItemName").val() +'</td>';
 	newRow += '<td class="itemUnit">kom</td>';
-	newRow += '<td class="itemQuantity">4</td>';
-	newRow += '<td class="itemPrice">24700.00</td>';
+	newRow += '<td class="itemQuantity">' + quantity.toFixed(2) +'</td>';
+	newRow += '<td class="itemPrice">' + price.toFixed(2) +'</td>';
 	newRow += '<td class="">0</td>';
-	newRow += '<td class="">24700.00</td>';
-	newRow += '<td class="">98800.00</td>';
-	newRow += '<td class="itemPDV">20</td>';
-	newRow += '<td class="">19760.00</td>';
-	newRow += '<td class="">118560.00</td>';
+	newRow += '<td class="">' + price.toFixed(2) + '</td>';
+	newRow += '<td class="">' + totalWithoutPDV.toFixed(2) + '</td>';
+	newRow += '<td class="itemPDV">' + pdvBase + '</td>';
+	newRow += '<td class="">' + pdvValue.toFixed(2) + '</td>';
+	newRow += '<td class="">' + totalValue.toFixed(2) + '</td>';
 	newRow += '</tr>'
-	if (id == 0) {
+	if (IsAdd) {
 		$('#invoiceItemsTable > tbody:last-child').append(newRow);
 	}
 	else {
-		var itemRow = '#ItemRow-' + id;
+		var itemRow = '#ItemRow-' + index;
 		$(itemRow).replaceWith(newRow);
 	}
+
 	$('invoiceItemsTable > .NoDataTr').remove();
 	$('#CreateOrUpdateInvoiceItemDialog').modal('toggle');
 	alertify.notify(successMessage, 'success', 5);

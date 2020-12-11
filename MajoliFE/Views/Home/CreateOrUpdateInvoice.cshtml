@@ -94,7 +94,7 @@
 							</div>
 
 						</div>
-						<span class="section">Stavke <button type="button" class="btn btn-primary" onclick="CreateOrUpdateInvoiceItem(0)">+</button></span>
+						<span class="section">Stavke <button type="button" class="btn btn-primary" onclick='CreateOrUpdateInvoiceItem(0,0,"true")'>+</button></span>
 						
 						<div class="col-md-12">
 							<table id="invoiceItemsTable" class="table table-striped jambo_table bulk_action">
@@ -125,13 +125,13 @@
 											Cena bez PDV-a
 										</th>
 										<th>
-											Osnovica
+											PDV (Osnovica)
 										</th>
 										<th>
-											%
+											PDV(%)
 										</th>
 										<th>
-											Iznos
+											PDV (Iznos)
 										</th>
 										<th>
 											Iznos sa PDV-om
@@ -141,11 +141,12 @@
 								<tbody>
 								@if (Model.Invoice.InvoiceItems != null && Model.Invoice.InvoiceItems.Count() > 0)
 								{
-									
+
 										@for (int i = 0; i < Model.Invoice.InvoiceItems.Count(); i++)
 										{
-										<tr class="hover" id="ItemRow-@Model.Invoice.InvoiceItems[i].Id" onclick="CreateOrUpdateInvoiceItem(@Model.Invoice.InvoiceItems[i].Id)">
-											<td>@i <input type="hidden" class="invoiceItemId" value="@Model.Invoice.InvoiceItems[i].Id" /> <input type="hidden" class="invoiceItemCreatedAt" value="@Model.Invoice.InvoiceItems[i].CreatedAt" /></td>
+											var index = i + 1;
+										<tr class="hover invoiceItemRow" id="ItemRow-@index" onclick='CreateOrUpdateInvoiceItem(@Model.Invoice.InvoiceItems[i].Id,@index,"false")'>
+											<td>@index <input type="hidden" class="invoiceItemId" value="@Model.Invoice.InvoiceItems[i].Id" /> <input type="hidden" class="invoiceItemCreatedAt" value="@Model.Invoice.InvoiceItems[i].CreatedAt" /></td>
 											<td class="itemId">@Model.Invoice.InvoiceItems[i].ItemId</td>
 											<td class="itemName">@Model.Invoice.InvoiceItems[i].Name</td>
 											<td class="itemUnit">@Model.Invoice.InvoiceItems[i].Unit</td>
@@ -297,6 +298,7 @@
 <input type="hidden" id="invoicesUrl" value="@Url.Action("Invoices","Home")" />
 <input type="hidden" id="id" value="@Model.Invoice.Id" />
 <input type="hidden" id="createdAt" value="@Model.Invoice.CreatedAt" />
+<input type="hidden" id="pdvValue" value="@Model.Settings.PDV" />
 
 
 @section Scripts

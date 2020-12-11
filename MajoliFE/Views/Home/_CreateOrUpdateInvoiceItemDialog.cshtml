@@ -10,27 +10,27 @@
 					</button>
 				</div>
 				<div class="modal-body row">
-					@Html.HiddenFor(x => x.Id)
-					@Html.HiddenFor(x => x.CreatedAt)
+					<input type="hidden" id="invoiceItemId" value="@Model.Id" />
+					<input type="hidden" id="invoiceItemCreatedAt" value="@Model.CreatedAt" />
 					<div class="col-md-12 col-sm-12  form-group has-feedback">
-						<input type="text" class="form-control has-feedback-left" asp-for="@Model.Name" placeholder="Naziv*" required>
+						<input type="text" class="form-control has-feedback-left" asp-for="@Model.Name" id="invoiceItemName" placeholder="Naziv*" required>
 						<span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
 					</div>
 					<div class="col-md-5 col-sm-12  form-group has-feedback">
-						<input type="number" class="form-control has-feedback-left" asp-for="@Model.Quantity" placeholder="Količina*" required>
+						<input type="number" class="form-control has-feedback-left" asp-for="@Model.Quantity" id="invoiceItemQuantity" placeholder="Količina*" required>
 						<span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
 					</div>
 					<div class="col-md-7 col-sm-12  form-group has-feedback">
-						<input type="number" class="form-control has-feedback-left" asp-for="@Model.Price" placeholder="Cena*" required>
+						<input type="number" class="form-control has-feedback-left" asp-for="@Model.Price" id="invoiceItemPrice" placeholder="Cena*" required>
 						<span class="fa fa-euro-sign form-control-feedback left" aria-hidden="true"></span>
 					</div>
 					<div class="col-md-12 col-sm-12  form-group has-feedback">
-						<input type="text" class="form-control has-feedback-left" asp-for="@Model.ItemId" placeholder="ID*" required>
+						<input type="text" class="form-control has-feedback-left" asp-for="@Model.ItemId" id="invoiceItemItemId" placeholder="ID*" required>
 						<span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" onclick="AddOrUpdateInvoiceItem(@Model.Id)" class="btn btn-primary">Snimi</button>
+					<button type="button" onclick="AddOrUpdateInvoiceItem(@Model.Id, @Model.Index, @Model.IsAdd.ToString().ToLower())" class="btn btn-primary">Snimi</button>
 					<button type="button" class="btn btn-warning" data-dismiss="modal">Zatvori</button>
 				</div>
 			</div>
