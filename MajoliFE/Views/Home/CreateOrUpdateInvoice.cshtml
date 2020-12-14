@@ -151,13 +151,13 @@
 											<td class="itemName">@Model.Invoice.InvoiceItems[i].Name</td>
 											<td class="itemUnit">@Model.Invoice.InvoiceItems[i].Unit</td>
 											<td class="itemQuantity">@Model.Invoice.InvoiceItems[i].Quantity</td>
-											<td class="itemPrice">@Model.Invoice.InvoiceItems[i].Price.ToString("F2")</td>
+											<td class="itemPrice">@Model.Invoice.InvoiceItems[i].Price.ToString("N2")</td>
 											<td class="">0</td>
-											<td class="">@Model.Invoice.InvoiceItems[i].Price.ToString("F2")</td>
-											<td class="">@Model.Invoice.InvoiceItems[i].TotalWithoutPDV.ToString("F2")</td>
+											<td class="">@Model.Invoice.InvoiceItems[i].Price.ToString("N2")</td>
+											<td class="itemPdvBase">@Model.Invoice.InvoiceItems[i].TotalWithoutPDV.ToString("N2")</td>
 											<td class="itemPDV">@Model.Settings.PDV</td>
-											<td class="">@Model.Invoice.InvoiceItems[i].GetPdvValue(@Model.Settings.PDV).ToString("F2")</td>
-											<td class="">@Model.Invoice.InvoiceItems[i].GetTotalValue(@Model.Settings.PDV).ToString("F2")</td>
+											<td class="itemPdvValue">@Model.Invoice.InvoiceItems[i].GetPdvValue(@Model.Settings.PDV).ToString("N2")</td>
+											<td class="itemPdvTotal">@Model.Invoice.InvoiceItems[i].GetTotalValue(@Model.Settings.PDV).ToString("N2")</td>
 										</tr>
 										}
 										
@@ -212,6 +212,7 @@
 												Popust:
 											</td>
 											<td id="tdDiscount">
+												0
 											</td>
 										</tr>
 										<tr>
@@ -233,14 +234,13 @@
 												PDV na razliku za uplatu:
 											</td>
 											<td class="tdPDV">
-												108.400.00
+
 											</td>
 										<tr style="font-weight:bold;">
 											<td>
 												Ukupno za uplatu sa PDV-om:
 											</td>
 											<td class="tdTotal">
-												108.400.00
 											</td>
 										</tr>
 
