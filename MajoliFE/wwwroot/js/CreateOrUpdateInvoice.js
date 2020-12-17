@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
 	$('#Invoice_CustomerId').trigger("change");
 	calculateInvoice();
+	$("#createOrUpdateInvoiceForm").validate();
 });
 
 $('#Invoice_CustomerId').on('change', function (event, params) {
@@ -45,16 +46,19 @@ $('#Invoice_CustomerId').on('change', function (event, params) {
 
 $('#createOrUpdateInvoiceForm').submit(function (event) {
 	event.preventDefault();
-	//alert("submti");
-	$.blockUI();
-	var invoice = GetInvoiceData();
-	$.post($("#createOrUpdateInvoiceUrl").val(), { invoice: invoice }, function (result) {
-		alertify.notify(successMessage, 'success', 5);
-		window.location.href = $("#invoicesUrl").val();
-		$.unblockUI();
-	});
-
+	var isValid = $('#createOrUpdateInvoiceForm').valid();
+	if (isValid) {
+		$.blockUI();
+		var invoice = GetInvoiceData();
+		$.post($("#createOrUpdateInvoiceUrl").val(), { invoice: invoice }, function (result) {
+			alertify.notify(successMessage, 'success', 5);
+			window.location.href = $("#invoicesUrl").val();
+			$.unblockUI();
+		});
+	}
 	
+
+		
 });
 
 function GetInvoiceData() {
@@ -70,7 +74,7 @@ function GetInvoiceData() {
 	invoice.BaseTotal = $("#baseTotalHidden").val();
 	invoice.Total = $("#totalHidden").val();
 	invoice.PDV = $("#pdvHidden").val();
-	invoice.Note = $("#note").text();
+	invoice.Note = $("#note").val();
 	invoice.IsPaid = $("#isPaidHidden").val();
 	invoice.IsIssued = $("#isIssuedHidden").val();
 	invoice.CustomerName = $("#customerName").val();
@@ -80,6 +84,7 @@ function GetInvoiceData() {
 	invoice.CustomerMB = $("#customerMb").val();
 	invoice.CreatedAt = $("#createdAt").val();
 	invoice.InvoiceItems = GetInvoiceItems();
+	invoice.IsPaid = $("#Invoice_IsPaid").val();
 	return invoice;
 }
 
@@ -110,51 +115,56 @@ function CreateOrUpdateInvoiceItem(id, index, isAdd) {
 }
 
 function AddOrUpdateInvoiceItem(id, index, IsAdd) {
-	var ind = 0;
-	var date = new Date();
-	var createdAt = date.toLocaleDateString();
-	var pdvBase = $("#pdvValue").val();
-	if (IsAdd) {
-		ind = $(".invoiceItemRow").length+1;
-	}
-	else {
-		ind = index;
-		createdAt = $("#invoiceItemCreatedAt").val();
-	}
-	var quantity =parseFloat($("#invoiceItemQuantity").val());
-	var price = parseFloat($("#invoiceItemPrice").val());
-	var totalWithoutPDV = quantity * price;
-	var pdvValue = ((quantity * price) / 100) * pdvBase;
-	var totalValue = totalWithoutPDV + pdvValue;
+	var isValid = $("#CreateOrUpdateInvoiceItemDialogForm").valid();
+	if (isValid) {
+		var ind = 0;
+		var date = new Date();
+		var createdAt = date.toLocaleDateString();
+		var pdvBase = $("#pdvValue").val();
+		if (IsAdd) {
+			ind = $(".invoiceItemRow").length + 1;
+		}
+		else {
+			ind = index;
+			createdAt = $("#invoiceItemCreatedAt").val();
+		}
+		var quantity = parseFloat($("#invoiceItemQuantity").val());
+		var price = parseFloat($("#invoiceItemPrice").val());
+		var totalWithoutPDV = quantity * price;
+		var pdvValue = ((quantity * price) / 100) * pdvBase;
+		var totalValue = totalWithoutPDV + pdvValue;
 
 
-	var newRow = '<tr class="hover invoiceItemRow" id="ItemRow-' + ind + '" onclick="CreateOrUpdateInvoiceItem(' + id + ',' + ind +',\'false\')">';
-	newRow += '<td>' + ind + ' <input type="hidden" class="invoiceItemId" value="' + id + '"> <input type="hidden" class="invoiceItemCreatedAt" value="' + createdAt +'"></td>';
-	newRow += '<td class="itemId">' + $("#invoiceItemItemId").val()+'</td>';
-	newRow += '<td class="itemName">' + $("#invoiceItemName").val() +'</td>';
-	newRow += '<td class="itemUnit">kom</td>';
-	newRow += '<td class="itemQuantity">' + quantity +'</td>';
-	newRow += '<td class="itemPrice">' + accounting.formatMoney(price) +'</td>';
-	newRow += '<td class="">0</td>';
-	newRow += '<td class="">' + accounting.formatMoney(price) + '</td>';
-	newRow += '<td class="itemPdvBase">' + accounting.formatMoney(totalWithoutPDV) + '</td>';
-	newRow += '<td class="itemPDV">' + pdvBase + '</td>';
-	newRow += '<td class="itemPdvValue">' + accounting.formatMoney(pdvValue)+ '</td>';
-	newRow += '<td class="itemPdvTotal">' + accounting.formatMoney(totalValue)+ '</td>';
-	newRow += '</tr>'
-	if (IsAdd) {
-		$('#invoiceItemsTable > tbody:last-child').append(newRow);
-	}
-	else {
-		var itemRow = '#ItemRow-' + index;
-		$(itemRow).replaceWith(newRow);
-	}
+		var newRow = '<tr class="hover invoiceItemRow" id="ItemRow-' + ind + '" onclick="CreateOrUpdateInvoiceItem(' + id + ',' + ind + ',\'false\')">';
+		newRow += '<td>' + ind + ' <input type="hidden" class="invoiceItemId" value="' + id + '"> <input type="hidden" class="invoiceItemCreatedAt" value="' + createdAt + '"></td>';
+		newRow += '<td class="itemId">' + $("#invoiceItemItemId").val() + '</td>';
+		newRow += '<td class="itemName">' + $("#invoiceItemName").val() + '</td>';
+		newRow += '<td class="itemUnit">kom</td>';
+		newRow += '<td class="itemQuantity">' + quantity + '</td>';
+		newRow += '<td class="itemPrice">' + accounting.formatMoney(price) + '</td>';
+		newRow += '<td class="">0</td>';
+		newRow += '<td class="">' + accounting.formatMoney(price) + '</td>';
+		newRow += '<td class="itemPdvBase">' + accounting.formatMoney(totalWithoutPDV) + '</td>';
+		newRow += '<td class="itemPDV">' + pdvBase + '</td>';
+		newRow += '<td class="itemPdvValue">' + accounting.formatMoney(pdvValue) + '</td>';
+		newRow += '<td class="itemPdvTotal">' + accounting.formatMoney(totalValue) + '</td>';
+		newRow += '</tr>'
+		if (IsAdd) {
+			$('#invoiceItemsTable > tbody:last-child').append(newRow);
+		}
+		else {
+			var itemRow = '#ItemRow-' + index;
+			$(itemRow).replaceWith(newRow);
+		}
 
-	$('invoiceItemsTable > .NoDataTr').remove();
-	$('#CreateOrUpdateInvoiceItemDialog').modal('toggle');
+		$('invoiceItemsTable > .NoDataTr').remove();
+		$('#CreateOrUpdateInvoiceItemDialog').modal('toggle');
 
-	calculateInvoice();
-	alertify.notify(successMessage, 'success', 5);
+		calculateInvoice();
+		alertify.notify(successMessage, 'success', 5);
+	}
+	
+	
 }
 
 function GetInvoiceItems() {
@@ -165,7 +175,7 @@ function GetInvoiceItems() {
 		invoiceItem.Name = $(tr).find(".itemName").html();
 		invoiceItem.Unit = $(tr).find(".itemUnit").html();
 		invoiceItem.Quantity = $(tr).find(".itemQuantity").html();
-		invoiceItem.Price = $(tr).find(".itemPrice").html();
+		invoiceItem.Price = accounting.unformat($(tr).find(".itemPrice").html(), ",");
 		invoiceItem.InvoiceId = $('#id').val();
 		invoiceItem.PDVValue = $(tr).find(".itemPDV").html();
 
@@ -192,13 +202,17 @@ function calculateInvoice() {
 	var pdvValue = 0;
 	var totalValue = 0;
 	$('#invoiceItemsTable tbody tr').each((index, tr) => {
-		pdvBase += accounting.unformat($(tr).find(".itemPdvBase").html());
-		pdvValue += accounting.unformat($(tr).find(".itemPdvValue").html());
-		totalValue += accounting.unformat($(tr).find(".itemPdvTotal").html());
+		pdvBase += accounting.unformat($(tr).find(".itemPdvBase").html(), ",");
+		pdvValue += accounting.unformat($(tr).find(".itemPdvValue").html(), ",");
+		totalValue += accounting.unformat($(tr).find(".itemPdvTotal").html(), ",");
 	});
 	$(".tdTotalWithoutPDV").html(accounting.formatMoney(pdvBase));
 	$(".tdPDV").html(accounting.formatMoney(pdvValue));
 	$(".tdTotal").html(accounting.formatMoney(totalValue));
+
+	$("#baseTotalHidden").val(pdvBase);
+	$("#totalHidden").val(totalValue);
+	$("#pdvHidden").val(pdvValue);
 }
 
 

@@ -46,33 +46,18 @@ namespace MajoliFE
 			//DI Configurations
 			services.AddScoped<IModelFactory, ModelFactory>();
 
-			//Localization
-			// Configure supported cultures and localization options
-			services.Configure<RequestLocalizationOptions>(options =>
+			services.Configure<RequestLocalizationOptions>(opts =>
 			{
-				var supportedCultures = new[]
-				{
-				new CultureInfo("en-US") {
-				DateTimeFormat = {
-                    LongTimePattern = "HH:mm:ss",
-                    ShortTimePattern = "hh:mm tt",
-					ShortDatePattern = "dd/mm/yyyy",
-					FullDateTimePattern =  "dd/mm/yyyy",
-					LongDatePattern = "dd/mm/yyyy"
-				},
-				}
-				};
-
-				// State what the default culture for your application is. This will be used if no specific culture
-				// can be determined for a given request.
-				options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
-
-				// You must explicitly state which cultures your application supports.
-				// These are the cultures the app supports for formatting numbers, dates, etc.
-				options.SupportedCultures = supportedCultures;
-
-				// These are the cultures the app supports for UI strings, i.e. we have localized resources for.
-				options.SupportedUICultures = supportedCultures;
+			    var supportedCultures = new[]
+			    {
+			        new CultureInfo("de-DE"),
+			    };
+			
+			    opts.DefaultRequestCulture = new RequestCulture("de-DE");
+			    // Formatting numbers, dates, etc.
+			    opts.SupportedCultures = supportedCultures;
+			    // UI strings that we have localized.
+			    opts.SupportedUICultures = supportedCultures;
 			});
 		}
 	
@@ -108,6 +93,10 @@ namespace MajoliFE
 					pattern: "{controller=Home}/{action=Index}/{id?}");
 				endpoints.MapRazorPages();
 			});
+
+			var cultureInfo = new CultureInfo("de-DE");
+			CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+			CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 		}
 	}
 }

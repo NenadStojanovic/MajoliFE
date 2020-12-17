@@ -1,6 +1,7 @@
 ﻿@model MajoliFE.Business.Dtos.InvoiceItemDto
 <div class="modal" id="CreateOrUpdateInvoiceItemDialog" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
+	<form id="CreateOrUpdateInvoiceItemDialogForm">
+		<div class="modal-dialog" role="document">
 
 			<div class="modal-content">
 				<div class="modal-header">
@@ -12,21 +13,33 @@
 				<div class="modal-body row">
 					<input type="hidden" id="invoiceItemId" value="@Model.Id" />
 					<input type="hidden" id="invoiceItemCreatedAt" value="@Model.CreatedAt" />
-					<div class="col-md-12 col-sm-12  form-group has-feedback">
-						<input type="text" class="form-control has-feedback-left" asp-for="@Model.Name" id="invoiceItemName" placeholder="Naziv*" required>
-						<span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
+					<div class="col-md-12 col-sm-12  form-group">
+						
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Naziv<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input type="text" class="form-control" value="@Model.Name" id="invoiceItemName" name="invoiceItemName" required>
+						</div>
+
 					</div>
-					<div class="col-md-5 col-sm-12  form-group has-feedback">
-						<input type="number" class="form-control has-feedback-left" asp-for="@Model.Quantity" id="invoiceItemQuantity" placeholder="Količina*" required>
-						<span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
+					<div class="col-md-12 col-sm-12  form-group">
+						
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Količina<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input type="number" class="form-control" value="@Model.Quantity" id="invoiceItemQuantity" name="invoiceItemQuantity" min="1" required>
+						</div>
 					</div>
-					<div class="col-md-7 col-sm-12  form-group has-feedback">
-						<input type="number" class="form-control has-feedback-left" asp-for="@Model.Price" id="invoiceItemPrice" placeholder="Cena*" required>
-						<span class="fa fa-euro-sign form-control-feedback left" aria-hidden="true"></span>
+					<div class="col-md-12 col-sm-12 form-group">
+						
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Cena<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input type="number" class="form-control" value="@Model.Price" id="invoiceItemPrice" name="invoiceItemPrice" min="1" required>
+						</div>
 					</div>
-					<div class="col-md-12 col-sm-12  form-group has-feedback">
-						<input type="text" class="form-control has-feedback-left" asp-for="@Model.ItemId" id="invoiceItemItemId" placeholder="ID*" required>
-						<span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">ID<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input type="text" class="form-control" value="@Model.ItemId" id="invoiceItemItemId" name="invoiceItemItemId" placeholder="ID*" required>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -34,5 +47,13 @@
 					<button type="button" class="btn btn-warning" data-dismiss="modal">Zatvori</button>
 				</div>
 			</div>
-	</div>
+		</div>
+	</form>
 </div>
+
+<script>
+	
+$(document).ready(function () {
+	$("#CreateOrUpdateInvoiceItemDialogForm").validate();
+});
+</script>

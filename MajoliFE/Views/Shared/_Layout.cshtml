@@ -34,6 +34,8 @@
 	<link href="~/Content/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 	<link href="~/Content/vendors/bootstrap-datepicker/vitalets-bootstrap-datepicker-c7af15b/css/datepicker.css" rel="stylesheet" />
 
+	<!-- Switchery -->
+	<link href="~/Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 	<!-- chosen -->
 	<link href="~/lib/chosen_v1.8.7/chosen.min.css" rel="stylesheet">
 
@@ -51,7 +53,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+						<a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Majoli FE</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -62,7 +64,7 @@
 							@*<img src="images/img.jpg" alt="~/Content." class="img-circle profile_img">*@
 						</div>
 						<div class="profile_info">
-							<span>Welcome,</span>
+							<span>Dobrodošli,</span>
 							<h2>John Doe</h2>
 						</div>
 					</div>
@@ -73,15 +75,15 @@
 					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
-							<h3>General</h3>
+							<h3>Navigacija</h3>
 							<ul class="nav side-menu">
 								<li>
-									<a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i> Početna <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="index.html">Dashboard</a></li>
-										<li><a href="index2.html">Dashboard2</a></li>
-										<li><a href="index3.html">Dashboard3</a></li>
-									</ul>
+									<a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i> Početna @*<span class="fa fa-chevron-down"></span>*@</a>
+									@*<ul class="nav child_menu">
+											<li><a href="index.html">Dashboard</a></li>
+											<li><a href="index2.html">Dashboard2</a></li>
+											<li><a href="index3.html">Dashboard3</a></li>
+										</ul>*@
 
 								</li>
 								<li>
@@ -166,7 +168,10 @@
 
 	<!-- jQuery -->
 	<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/messages_sr_lat.js"></script>
+	<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="~/Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- FastClick -->
@@ -201,6 +206,8 @@
 	<script src="~/Content/vendors/pdfmake/build/pdfmake.min.js"></script>
 	<script src="~/Content/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+	<!-- Switchery -->
+	<script src="~/Content/vendors/switchery/dist/switchery.min.js"></script>
 	<!-- chosen -->
 	<script src="~/lib/chosen_v1.8.7/chosen.jquery.min.js"></script>
 
@@ -214,7 +221,7 @@
 
 	<script src="~/lib/alertifyjs/alertify.min.js"></script>
 	<script src="~/lib/blockUI/jquery.blockUI.js"></script>
-	<script src="~/lib/accounting/accounting.min.js"></script>
+	<script src="~/lib/accounting/accounting.js"></script>
 
 
 	<script src="~/js/site.js" asp-append-version="true"></script>

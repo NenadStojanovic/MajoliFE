@@ -3,11 +3,10 @@
 	ViewData["Title"] = "Računi";
 }
 
-@*<select class="chosen-select" asp-for="@Model.Invoice.CustomerId" asp-items="@Model.Customers"></select>*@
 <div class="">
 	<div class="page-title">
 		<div class="title_left">
-			<h3>Kreiraj novi račun</h3>
+			<h3>Kreiraj/Ažuriraj račun</h3>
 		</div>
 
 	</div>
@@ -15,55 +14,75 @@
 		<div class="col-md-12 col-sm-12">
 			<div class="x_panel">
 				<div class="x_content">
-					<form class="" id="createOrUpdateInvoiceForm" action="" method="post" novalidate="">
-						<span class="section">Osnovne informacije</span>
+					<form class="" id="createOrUpdateInvoiceForm" action="" method="post">
+					
+						<span class="section">
+							Osnovne informacije:
+							@if (Model.Invoice.IsIssued)
+							{
+								<span style="font-size:16px; color:#337ab7">Izdat</span><span style="font-size:16px;"> / </span>
+							}
+							else
+							{
+								<span style="font-size:16px; color:#ec971f">Nije izdat</span><span style="font-size:16px;"> / </span>
+							}
+							@if (Model.Invoice.IsPaid)
+							{
+								<span style="font-size:16px; color:#26B99A">Plaćen</span>
+							}
+							else
+							{
+								<span style="font-size:16px; color:red">Nije plaćen</span>
+							}
+						@Html.CheckBoxFor(model => model.Invoice.IsPaid,new { @class = "js-switch" })
+						</span>
 						<div class="col-md-7 col-sm-12">
 							<div class="col-md-6 col-sm-6">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Broj računa<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Broj računa<span>*</span></label>
 									<div class="col-md-9 col-sm-9">
-										<input class="form-control" id="invoiceNumber" type="number" value="@Model.Invoice.InvoiceNumber" required="required">
+										<input class="form-control" id="invoiceNumber" name="invoiceNumber" type="number" value="@Model.Invoice.InvoiceNumber" required="required">
 									</div>
 								</div>
 							</div>
 
 							<div class="col-md-6 col-sm-6">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum izdavanja<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum izdavanja<span >*</span></label>
 									<div class="col-md-9 col-sm-9">
-										<input class="form-control datepicker" type="text" id="dateIssued" value="@Model.Invoice.DateIssued.ToString("dd-mm-yyyy")" required="required">
+										<input class="form-control datepicker" type="text" id="dateIssued" name="dateIssued" value="@Model.Invoice.DateIssued.ToShortDateString()" required="required">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum prometa<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum prometa<span >*</span></label>
 									<div class="col-md-9 col-sm-9">
-										<input class="form-control datepicker" type="text" id="dateOfService" value="@Model.Invoice.DateOfService.ToString("dd-mm-yyyy")" required="required">
+										<input class="form-control datepicker" type="text" id="dateOfService" name="dateOfService" value="@Model.Invoice.DateOfService.ToShortDateString()" required="required">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6" style="margin-bottom:10px;">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Mesto<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Mesto<span>*</span></label>
 									<div class="col-md-9 col-sm-9">
-										<input class="form-control" id="place" value="@Model.Invoice.Place" required="required">
+										<input class="form-control" id="place" name="place" value="@Model.Invoice.Place" required="required">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-12">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum valute<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Datum valute<span >*</span></label>
 									<div class="col-md-9 col-sm-9">
-										<input class="form-control datepicker" type="text" id="currencyDate" value="@Model.Invoice.CurrencyDate.ToString("dd-mm-yyyy")" required="required">
+										<input class="form-control datepicker" type="text" id="currencyDate" name="currencyDate" value="@Model.Invoice.CurrencyDate.ToShortDateString()" required="required">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-12">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Broj dana<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Broj dana<span>*</span></label>
 									<div class="col-md-9 col-sm-9">
-										<input class="form-control" type="number" id="numOfdays" value="@Model.Invoice.CurrencyDateNumOfDays" required="required">
+										<input class="form-control" type="number" id="numOfdays" name="numOfdays" value="@Model.Invoice.CurrencyDateNumOfDays" required="required">
 									</div>
 								</div>
 							</div>
@@ -71,31 +90,31 @@
 						<div class="col-md-4 col-sm-12 col-md-offset-1">
 							<div class="col-md-12 col-sm-12" style="margin-bottom:10px;">
 								<div class="field item form-group">
-									<label class="col-form-label col-md-3 col-sm-3  label-align">Kupac<span class="required">*</span></label>
+									<label class="col-form-label col-md-3 col-sm-3  label-align">Kupac<span>*</span></label>
 									<div class="col-md-9 col-sm-9">
 										<select class="chosen-select" style="width:100%;" asp-for="@Model.Invoice.CustomerId" asp-items="@Model.Customers"></select>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-9 col-sm-9">
-								<input class="form-control" id="customerName" placeholder="Naziv kupca" value="@Model.Invoice.CustomerName" required>
+								<input class="form-control" id="customerName" name="customerName" placeholder="Naziv kupca" value="@Model.Invoice.CustomerName" required>
 							</div>
 							<div class="col-md-3 col-sm-3">
-								<input class="form-control" id="partnerId" placeholder="PartnerId" value="@Model.Invoice.PartnerId" required>
+								<input class="form-control" id="partnerId" name="partnerId" placeholder="PartnerId" value="@Model.Invoice.PartnerId" required>
 							</div>
 							<div class="col-md-12 col-sm-12">
-								<textarea class="form-control" id="customerAddress" placeholder="Adresa" required>@Model.Invoice.CustomerAddress</textarea>
+								<textarea class="form-control" id="customerAddress" name="customerAddress" placeholder="Adresa" required>@Model.Invoice.CustomerAddress</textarea>
 							</div>
 							<div class="col-md-6 col-sm-6">
-								<input class="form-control" id="customerPib" placeholder="PIB" value="@Model.Invoice.CustomerPIB" required>
+								<input class="form-control" id="customerPib" name="customerPib" placeholder="PIB" value="@Model.Invoice.CustomerPIB" required>
 							</div>
 							<div class="col-md-6 col-sm-6">
-								<input class="form-control" id="customerMb" placeholder="MB" value="@Model.Invoice.CustomerMB" required>
+								<input class="form-control" id="customerMb" name="customerMb" placeholder="MB" value="@Model.Invoice.CustomerMB" required>
 							</div>
 
 						</div>
 						<span class="section">Stavke <button type="button" class="btn btn-primary" onclick='CreateOrUpdateInvoiceItem(0,0,"true")'>+</button></span>
-						
+
 						<div class="col-md-12">
 							<table id="invoiceItemsTable" class="table table-striped jambo_table bulk_action">
 								<thead>
@@ -139,38 +158,38 @@
 									</tr>
 								</thead>
 								<tbody>
-								@if (Model.Invoice.InvoiceItems != null && Model.Invoice.InvoiceItems.Count() > 0)
-								{
+									@if (Model.Invoice.InvoiceItems != null && Model.Invoice.InvoiceItems.Count() > 0)
+									{
 
 										@for (int i = 0; i < Model.Invoice.InvoiceItems.Count(); i++)
 										{
 											var index = i + 1;
-										<tr class="hover invoiceItemRow" id="ItemRow-@index" onclick='CreateOrUpdateInvoiceItem(@Model.Invoice.InvoiceItems[i].Id,@index,"false")'>
-											<td>@index <input type="hidden" class="invoiceItemId" value="@Model.Invoice.InvoiceItems[i].Id" /> <input type="hidden" class="invoiceItemCreatedAt" value="@Model.Invoice.InvoiceItems[i].CreatedAt" /></td>
-											<td class="itemId">@Model.Invoice.InvoiceItems[i].ItemId</td>
-											<td class="itemName">@Model.Invoice.InvoiceItems[i].Name</td>
-											<td class="itemUnit">@Model.Invoice.InvoiceItems[i].Unit</td>
-											<td class="itemQuantity">@Model.Invoice.InvoiceItems[i].Quantity</td>
-											<td class="itemPrice">@Model.Invoice.InvoiceItems[i].Price.ToString("N2")</td>
-											<td class="">0</td>
-											<td class="">@Model.Invoice.InvoiceItems[i].Price.ToString("N2")</td>
-											<td class="itemPdvBase">@Model.Invoice.InvoiceItems[i].TotalWithoutPDV.ToString("N2")</td>
-											<td class="itemPDV">@Model.Settings.PDV</td>
-											<td class="itemPdvValue">@Model.Invoice.InvoiceItems[i].GetPdvValue(@Model.Settings.PDV).ToString("N2")</td>
-											<td class="itemPdvTotal">@Model.Invoice.InvoiceItems[i].GetTotalValue(@Model.Settings.PDV).ToString("N2")</td>
-										</tr>
+											<tr class="hover invoiceItemRow" id="ItemRow-@index" onclick='CreateOrUpdateInvoiceItem(@Model.Invoice.InvoiceItems[i].Id,@index,"false")'>
+												<td>@index <input type="hidden" class="invoiceItemId" value="@Model.Invoice.InvoiceItems[i].Id" /> <input type="hidden" class="invoiceItemCreatedAt" value="@Model.Invoice.InvoiceItems[i].CreatedAt" /></td>
+												<td class="itemId">@Model.Invoice.InvoiceItems[i].ItemId</td>
+												<td class="itemName">@Model.Invoice.InvoiceItems[i].Name</td>
+												<td class="itemUnit">@Model.Invoice.InvoiceItems[i].Unit</td>
+												<td class="itemQuantity">@Model.Invoice.InvoiceItems[i].Quantity</td>
+												<td class="itemPrice">@Model.Invoice.InvoiceItems[i].Price.ToString("N2")</td>
+												<td class="">0</td>
+												<td class="">@Model.Invoice.InvoiceItems[i].Price.ToString("N2")</td>
+												<td class="itemPdvBase">@Model.Invoice.InvoiceItems[i].TotalWithoutPDV.ToString("N2")</td>
+												<td class="itemPDV">@Model.Settings.PDV</td>
+												<td class="itemPdvValue">@Model.Invoice.InvoiceItems[i].GetPdvValue(@Model.Settings.PDV).ToString("N2")</td>
+												<td class="itemPdvTotal">@Model.Invoice.InvoiceItems[i].GetTotalValue(@Model.Settings.PDV).ToString("N2")</td>
+											</tr>
 										}
-										
-									
-								}
-								else
-								{
-								<tr class="NoDataTr">
-									<td colspan="12" style="text-align:center; font-size:20px">
-										Nema podataka
-									</td>
-								</tr>
-								}
+
+
+									}
+									else
+									{
+										<tr class="NoDataTr">
+											<td colspan="12" style="text-align:center; font-size:20px">
+												Nema podataka
+											</td>
+										</tr>
+									}
 								</tbody>
 							</table>
 						</div>
@@ -234,7 +253,6 @@
 												PDV na razliku za uplatu:
 											</td>
 											<td class="tdPDV">
-
 											</td>
 										<tr style="font-weight:bold;">
 											<td>

@@ -48,28 +48,28 @@
 							<tr>
 								<td>@item.Id</td>
 								<td>@item.InvoiceNumber</td>
-								<td>@item.DateIssued.ToString()</td>
-								<td>@item.CurrencyDate.AddDays(item.CurrencyDateNumOfDays).ToString()</td>
+								<td>@item.DateIssued.ToShortDateString()</td>
+								<td>@item.CurrencyDate.AddDays(item.CurrencyDateNumOfDays).ToShortDateString()</td>
 								<td>@item.Customer?.Name</td>
-								<td>@item.Total.ToString("F2")</td>
+								<td>@item.Total.ToString("N2")</td>
 								@if (item.IsIssued)
 								{
-									<td style="background-color:aliceblue">Da</td>
+									<td style="background-color:#337ab7;color:white">Da</td>
 								}
 								else
 								{
-									<td style="background-color:lightyellow">Ne</td>
+									<td style="background-color:#ec971f;color:white">Ne</td>
 								}
 
 								@if (item.IsPaid)
 								{
-									<td style="background-color:darkseagreen">Da</td>
+									<td style="background-color:#26B99A;color:white">Da</td>
 								}
 								else
 								{
-									<td style="background-color:indianred">Ne</td>
+									<td style="background-color:red; color:white">Ne</td>
 								}
-								<td><button onclick="location.href='@Url.Action("CreateOrUpdateInvoice", "Home", new { id = item.Id })'" class="btn btn-default" type="button"><i class="fa fa-edit"></i></button></td>
+								<td><button onclick="location.href='@Url.Action("CreateOrUpdateInvoice", "Home", new { id = item.Id })'" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button></td>
 							</tr>
 							}
 						</tbody>

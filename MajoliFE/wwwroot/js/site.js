@@ -20,10 +20,11 @@ $(document).ready(function () {
 	$(".chosen-select").chosen();
 
 	$('.datepicker').datepicker({
-		format: "dd-mm-yyyy",
+		format: "dd.mm.yyyy",
 		autoclose: true,
 		todayBtn: true,
 	});
+
 });
 
 function BindPlaceholderTooltips() {
@@ -40,26 +41,14 @@ function BindPlaceholderTooltips() {
 	});
 }
 // unblock when ajax activity stops 
-$.blockUI.defaults.message = '<img class="loaderImg" src="~/loaderV3.gif" runat="server" />';
+$.blockUI.defaults.message = '<span class="loaderSpan">Molimo sačekajte...</span>'//'<img class="loaderImg" src="loaderV3.gif" runat="server" />';
 $.blockUI.defaults.overlayCSS.backgroundColor = "#000";
 $.blockUI.defaults.overlayCSS.opacity = 0.5;
 $(document).ajaxStop($.unblockUI); 
 
 //accounting.js settings
 accounting.settings.currency.symbol = "";
+accounting.settings.currency.decimal = ",";
+accounting.settings.currency.thousand = ".";
 
-function formatCurrency(amount, decimalCount = 2, decimal = ".", thousands = ",") {
-	try {
-		decimalCount = Math.abs(decimalCount);
-		decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
-
-		const negativeSign = amount < 0 ? "-" : "";
-
-		let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
-		let j = (i.length > 3) ? i.length % 3 : 0;
-
-		return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
-	} catch (e) {
-		console.log(e)
-	}
-};
+alertify.set('notifier', 'position', 'top-right');
