@@ -1,6 +1,7 @@
 ﻿using MajoliFE.Business.Interfaces;
 using MajoliFE.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Linq;
 
 namespace MajoliFE.Infrastructure
@@ -27,7 +28,7 @@ namespace MajoliFE.Infrastructure
 			}
 			else
 			{
-				model.Invoice = new Business.Dtos.InvoiceDto();
+				model.Invoice = new Business.Dtos.InvoiceDto() { CurrencyDate = DateTime.Now, DateIssued = DateTime.Now, DateOfService = DateTime.Now};
 			}
 			var customers = _customersService.GetAll();
 			model.Customers = new SelectList(customers, "Id", "Name",model.Invoice.CustomerId);

@@ -12,8 +12,8 @@ namespace MajoliFE.Business.Dtos
 		public DateTime CurrencyDate { get; set; }
 		public int CurrencyDateNumOfDays { get; set; }
 		public int CustomerId { get; set; }
-		public long BaseTotal { get; set; }
-		public long Total { get; set; }
+		public float BaseTotal { get; set; }
+		public float Total { get; set; }
 		public int PDV { get; set; }
 		public string Note { get; set; }
 		public bool IsPaid { get; set; }

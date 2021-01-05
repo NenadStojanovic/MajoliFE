@@ -49,5 +49,18 @@ namespace MajoliFE.Business.Services
 			var mappedResult = _mapper.Map<IEnumerable<InvoiceItemDto>>(result);
 			return mappedResult;
 		}
+
+		public void DeleteInvoiceItem(int invoiceItemId)
+		{
+			if(invoiceItemId != 0)
+			{
+				var item = _invoiceItemRepository.GetById(invoiceItemId);
+				if(item!=null)
+				{
+					_invoiceItemRepository.Delete(item);
+					_invoiceItemRepository.SaveChanges();
+				}
+			}
+		}
 	}
 }

@@ -12,7 +12,7 @@
 		<div class="title_right">
 			<div class="form-group pull-right top_search">
 				<div class="input-group">
-					<button id="addNewCustomerBtn" onclick="location.href ='@Url.Action("CreateOrUpdateInvoice", "Home",new { id = 0})'"  class="btn btn-primary" type="button">Dodaj novi</button>
+					<button id="addNewCustomerBtn" onclick="location.href ='@Url.Action("CreateOrUpdateInvoice", "Home",new { id = 0})'" class="btn btn-primary" type="button">Dodaj novi</button>
 				</div>
 			</div>
 		</div>
@@ -45,32 +45,35 @@
 						<tbody>
 							@foreach (var item in Model.Invoices)
 							{
-							<tr>
-								<td>@item.Id</td>
-								<td>@item.InvoiceNumber</td>
-								<td>@item.DateIssued.ToShortDateString()</td>
-								<td>@item.CurrencyDate.AddDays(item.CurrencyDateNumOfDays).ToShortDateString()</td>
-								<td>@item.Customer?.Name</td>
-								<td>@item.Total.ToString("N2")</td>
-								@if (item.IsIssued)
-								{
-									<td style="background-color:#337ab7;color:white">Da</td>
-								}
-								else
-								{
-									<td style="background-color:#ec971f;color:white">Ne</td>
-								}
+								<tr>
+									<td>@item.Id</td>
+									<td>@item.InvoiceNumber</td>
+									<td>@item.DateIssued.ToShortDateString()</td>
+									<td>@item.CurrencyDate.AddDays(item.CurrencyDateNumOfDays).ToShortDateString()</td>
+									<td>@item.Customer?.Name</td>
+									<td>@item.Total.ToString("N2")</td>
+									@if (item.IsIssued)
+									{
+										<td style="background-color:#337ab7;color:white">Da</td>
+									}
+									else
+									{
+										<td style="background-color:#ec971f;color:white">Ne</td>
+									}
 
-								@if (item.IsPaid)
-								{
-									<td style="background-color:#26B99A;color:white">Da</td>
-								}
-								else
-								{
-									<td style="background-color:red; color:white">Ne</td>
-								}
-								<td><button onclick="location.href='@Url.Action("CreateOrUpdateInvoice", "Home", new { id = item.Id })'" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button></td>
-							</tr>
+									@if (item.IsPaid)
+									{
+										<td style="background-color:#26B99A;color:white">Da</td>
+									}
+									else
+									{
+										<td style="background-color:red; color:white">Ne</td>
+									}
+								<td>
+									<button onclick="location.href='@Url.Action("CreateOrUpdateInvoice", "Home", new { id = item.Id })'" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button>
+									<button onclick="DeleteInvoice(@item.Id )" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+								</td>
+								</tr>
 							}
 						</tbody>
 					</table>
@@ -79,6 +82,7 @@
 		</div>
 	</div>
 </div>
+<input type="hidden" id="DeleteInvoiceUrl" value="@Url.Action("DeleteInvoice","Home")" />
 <div id="CreateOrUpdateCustomerDialogHolder">
 
 </div>
@@ -87,9 +91,9 @@
 	@Html.HiddenFor(m => m.Message);
 }
 
-@*@section Scripts
+@section Scripts
 {
-	<script src="~/js/Customers.js"></script>
-}*@
+	<script src="~/js/Invoices.js"></script>
+}
 
 

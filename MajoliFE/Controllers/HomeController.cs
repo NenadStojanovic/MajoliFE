@@ -189,12 +189,21 @@ namespace MajoliFE.Controllers
 			if (invoiceId != 0)
 			{
 				_invoiceService.DeleteInvoice(invoiceId);
-				return Json(Ok());
+				
 			}
-			else
+			return Json(Ok());
+
+		}
+
+		[HttpGet]
+		public IActionResult DeleteInvoiceItem(int invoiceItemId)
+		{
+			if (invoiceItemId != 0)
 			{
-				return Json(Ok());
+				_invoiceItemService.DeleteInvoiceItem(invoiceItemId);
+
 			}
+			return Json(Ok());
 
 		}
 	}

@@ -71,8 +71,8 @@ function GetInvoiceData() {
 	invoice.CurrencyDate = $('#currencyDate').val();
 	invoice.CurrencyDateNumOfDays = $('#numOfdays').val();
 	invoice.CustomerId = $("#Invoice_CustomerId").val();
-	invoice.BaseTotal = $("#baseTotalHidden").val();
-	invoice.Total = $("#totalHidden").val();
+	invoice.BaseTotal = $("#baseTotalHidden").val().replace(".", ",");
+	invoice.Total = $("#totalHidden").val().replace(".", ",");
 	invoice.PDV = $("#pdvHidden").val();
 	invoice.Note = $("#note").val();
 	invoice.IsPaid = $("#isPaidHidden").val();
@@ -148,6 +148,7 @@ function AddOrUpdateInvoiceItem(id, index, IsAdd) {
 		newRow += '<td class="itemPDV">' + pdvBase + '</td>';
 		newRow += '<td class="itemPdvValue">' + accounting.formatMoney(pdvValue) + '</td>';
 		newRow += '<td class="itemPdvTotal">' + accounting.formatMoney(totalValue) + '</td>';
+		newRow += '<td class=""><button onclick="DeleteInvoiceItem(0,this,event)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button></td>';
 		newRow += '</tr>'
 		if (IsAdd) {
 			$('#invoiceItemsTable > tbody:last-child').append(newRow);
@@ -157,7 +158,7 @@ function AddOrUpdateInvoiceItem(id, index, IsAdd) {
 			$(itemRow).replaceWith(newRow);
 		}
 
-		$('invoiceItemsTable > .NoDataTr').remove();
+		$('.NoDataTr').remove();
 		$('#CreateOrUpdateInvoiceItemDialog').modal('toggle');
 
 		calculateInvoice();
@@ -213,6 +214,58 @@ function calculateInvoice() {
 	$("#baseTotalHidden").val(pdvBase);
 	$("#totalHidden").val(totalValue);
 	$("#pdvHidden").val(pdvValue);
+}
+
+function DeleteInvoiceItem(invoiceItemId, e, evt) {
+	evt.stopPropagation();
+	$.confirm({
+		title: 'Upozorenje!',
+		content: 'Da li ste sigurni?',
+		type: 'blue',
+		buttons: {
+			Da: {
+				btnClass: 'btn btn-primary',
+				action: function () {
+					if (invoiceItemId == 0) {
+						e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+						calculateInvoice();
+					}
+					else {
+						DeleteInvoiceItemAjax(invoiceItemId,e);
+					}
+
+					
+				}
+			},
+			Ne: {
+				btnClass: 'btn btn-warning',
+				action: function () {
+				}
+			}
+		}
+	});
+}
+
+function DeleteInvoiceItemAjax(invoiceItemId,e) {
+	$.blockUI();
+	$.ajax({
+		type: "GET",
+		url: $("#DeleteInvoiceItemUrl").val(),
+		data: { invoiceItemId: invoiceItemId },
+		contentType: 'application/json',
+		dataType: "json",
+		success: function (response) {
+			AlertSuccess(false);
+			e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+			calculateInvoice();
+		},
+		error: function (response) {
+			AlertError();
+		},
+		complete: function () {
+			$.unblockUI();
+		}
+	});
 }
 
 

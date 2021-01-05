@@ -13,5 +13,6 @@ namespace MajoliFE.Business.Interfaces
 		public void Update(InvoiceItemDto model);
 
 		IEnumerable<InvoiceItemDto> GetByInvoiceId(int invoiceId);
+		void DeleteInvoiceItem(int invoiceItemId);
 	}
 }
