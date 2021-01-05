@@ -7,8 +7,9 @@ var successMessage = "Akcija je uspešno izvršena.";
 $(document).ready(function () {
 	if ($('#Message').length > 0) {
 		var message = $('#Message').val();
-		alertify.set('notifier', 'position', 'top-right');
-		alertify.notify(message, 'success', 5);
+		//alertify.set('notifier', 'position', 'top-right');
+		//alertify.notify(message, 'success', 5);
+		AlertInfo(message);
 	}
 
 	// Display placeholder="" text as tooltip for :focused, non-empty inputs
@@ -52,3 +53,52 @@ accounting.settings.currency.decimal = ",";
 accounting.settings.currency.thousand = ".";
 
 alertify.set('notifier', 'position', 'top-right');
+
+//Custom Alerts
+function AlertSuccess(shouldReload) {
+	$.confirm({
+		title: 'Obaveštenje',
+		content: 'Akcija je uspešno izvršena.',
+		type: 'green',
+		buttons: {
+			Ok: {
+				action: function () {
+					if (shouldReload) {
+						location.reload();
+					}
+					
+				}
+			}
+		}
+	});
+}
+
+function AlertError() {
+	$.confirm({
+		title: 'Greška',
+		content: 'Došlo je do greške. Pokušajte ponovo.',
+		type: 'red',
+		typeAnimated: true,
+		buttons: {
+			Ok: {
+				action: function () {
+				}
+			}
+		}
+	});
+}
+
+function AlertInfo(message) {
+	$.confirm({
+		title: 'Obaveštenje',
+		content: message,
+		type: 'blue',
+		buttons: {
+			Ok: {
+				action: function () {
+				
+				}
+			}
+		}
+	});
+}

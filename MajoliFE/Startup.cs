@@ -41,6 +41,8 @@ namespace MajoliFE
 			services.AddRazorPages()
 				.AddRazorRuntimeCompilation();
 
+
+
 			Business.StartupExtensions.ConfigureServices(services);
 
 			//DI Configurations

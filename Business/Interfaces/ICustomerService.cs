@@ -14,5 +14,6 @@ namespace MajoliFE.Business.Interfaces
 		public CustomerDto GetById(int id);
 
 		public void Update(CustomerDto model);
+		bool DeleteCustomer(int customerId);
 	}
 }

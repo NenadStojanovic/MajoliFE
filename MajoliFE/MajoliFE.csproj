@@ -2705,4 +2705,9 @@
     <None Include="wwwroot\Content\vendors\validator\validator.js" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\jquery-confirm\" />
+  </ItemGroup>
+
 </Project>

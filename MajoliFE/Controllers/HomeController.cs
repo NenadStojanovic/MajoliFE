@@ -12,9 +12,11 @@ using MajoliFE.Infrastructure;
 using Microsoft.AspNetCore.Localization;
 using System.Threading;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MajoliFE.Controllers
 {
+	//[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -164,6 +166,36 @@ namespace MajoliFE.Controllers
 				return Json(new CustomerDto());
 			}
 			
+		}
+
+		[HttpGet]
+		public IActionResult DeleteCustomer(int customerId)
+		{
+			if (customerId != 0)
+			{
+				var result = _customerService.DeleteCustomer(customerId);
+				return Json(result);
+			}
+			else
+			{
+				return Json(true);
+			}
+
+		}
+
+		[HttpGet]
+		public IActionResult DeleteInvoice(int invoiceId)
+		{
+			if (invoiceId != 0)
+			{
+				_invoiceService.DeleteInvoice(invoiceId);
+				return Json(Ok());
+			}
+			else
+			{
+				return Json(Ok());
+			}
+
 		}
 	}
 }

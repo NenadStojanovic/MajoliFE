@@ -26,5 +26,11 @@ namespace MajoliFE.Data.Repositories
 			var result = dbContext.Invoices.Where(x=>x.Id==id).Include(c => c.Customer).FirstOrDefault();
 			return result;
 		}
+
+		public List<Invoice> GetInvocesByCustomerId(int customerId)
+		{
+			var result = dbContext.Invoices.Where(x => x.CustomerId == customerId).ToList();
+			return result;
+		}
 	}
 }

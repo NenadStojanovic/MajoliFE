@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>@ViewData["Title"] - MajoliFE</title>
+	<link rel="stylesheet" href="~/css/site.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Majoli Financial Engine | </title>
+
+	<!-- Bootstrap -->
+	<link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+	
+
+	<!-- Custom Theme Style -->
+	<link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+
+	<!-- Custom Style -->
+	<link href="~/lib/alertifyjs/css/alertify.css" rel="stylesheet">
+</head>
+
+
+<body class="">
+	<div class="container body">
+		<div class="main_container">
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<!-- top tiles -->
+				@RenderBody()
+			</div>
+			<!-- /page content -->
+			<!-- footer content -->
+			<footer>
+				<div class="pull-right">
+					Copyright © 2020 Diligent. All rights reserved. Version: 1.0.0.2 <a href="https://dilig.net/">Diligent Software</a>
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/messages_sr_lat.js"></script>
+	<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="~/Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+
+	<!-- Custom Theme Scripts -->
+	<script src="~/Content/src/js/helpers/smartresize.js"></script>
+	<script src="~/Content/build/js/custom.min.js"></script>
+
+	<!-- JQery Confirm -->
+	<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@RenderSection("Scripts", required: false)
+
+</body>
+
+
+
+
+</html>
