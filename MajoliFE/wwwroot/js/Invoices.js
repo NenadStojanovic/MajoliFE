@@ -60,16 +60,17 @@ function DownloadInvoice(invoiceId) {
 	});
 }
 
-function DownloadInvoiceAjax(invoiceId) {
+function DownloadInvoiceAjax(InvoiceId) {
 	$.blockUI();
 	$.ajax({
-		type: "GET",
-		url: $("#DownloadInvoiceUrl").val(),
-		data: { invoiceId: invoiceId },
-		contentType: 'application/json',
+		type: "POST",
 		dataType: "json",
+		url: $("#DownloadInvoiceUrl").val(),
+		data: { invoiceId: InvoiceId },
 		success: function (response) {
-			AlertSuccess(false);
+			//var resp = JSON.parse(response);
+			window.location = '/Home/Download?fileGuid=' + response.value.fileGuid
+				+ '&filename=' + response.value.fileName;
 		},
 		error: function (response) {
 			AlertError();

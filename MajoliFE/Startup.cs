@@ -17,6 +17,7 @@ using MajoliFE.Infrastructure.Middleware;
 using MajoliFE.Infrastructure;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace MajoliFE
 {
@@ -40,6 +41,10 @@ namespace MajoliFE
 			services.AddControllersWithViews();
 			services.AddRazorPages()
 				.AddRazorRuntimeCompilation();
+
+			services.AddSingleton<ITempDataProvider, SessionStateTempDataProvider>();
+			services.AddSession();
+			services.AddMemoryCache();
 
 
 
@@ -86,7 +91,11 @@ namespace MajoliFE
 			app.UseAuthentication();
 			app.UseAuthorization();
 
+			app.UseSession();
+
 			app.UseMiddleware(typeof(ExceptionHandlingMiddleware));
+
+
 
 			app.UseEndpoints(endpoints =>
 			{

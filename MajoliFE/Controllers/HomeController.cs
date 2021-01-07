@@ -207,16 +207,49 @@ namespace MajoliFE.Controllers
 
 		}
 
-		[HttpGet]
+		[HttpPost]
 		public IActionResult DownloadInvoice(int invoiceId)
 		{
 			if (invoiceId != 0)
 			{
-				_invoiceService.DownloadInvoice(invoiceId);
+				try
+				{
+					var result = _invoiceService.GenerateInvoice(invoiceId);
+					string handle = Guid.NewGuid().ToString();
+					TempData[handle] = Convert.ToBase64String(result.InvoiceReportData);
+					var fileName = "Racun_" + result.CustomerName + "_" + DateTime.Now.ToShortDateString()+ ".xlsx";
+					var fileResult = new Models.FileResult() { FileGuid = handle, FileName = fileName };
+					return Json(Ok(fileResult));
+				}
+				catch(Exception ex)
+				{
+					return Json(Error());
+				}
+
+				
 
 			}
 			return Json(Ok());
 
 		}
+
+		[HttpGet]
+		public ActionResult Download(string fileGuid, string fileName)
+		{
+			if (TempData[fileGuid] != null)
+			{
+				var baseStringData = TempData[fileGuid] as string;
+				byte[] data = Convert.FromBase64String(baseStringData);
+				return File(data, "application/vnd.ms-excel", fileName);
+			}
+			else
+			{
+				// Problem - Log the error, generate a blank file,
+				//           redirect to another controller action - whatever fits with your application
+				return new EmptyResult();
+			}
+		}
 	}
+
+
 }

@@ -1,6 +1,7 @@
 ﻿using MajoliFE.Data.Data;
 using MajoliFE.Data.DbContexts;
 using MajoliFE.Data.Interfaces;
+using System.Linq;
 
 namespace MajoliFE.Data.Repositories
 {
@@ -10,6 +11,11 @@ namespace MajoliFE.Data.Repositories
 		public SettingsRepository(AppDbContext dbContext) : base(dbContext)
 		{
 			this.dbContext = dbContext;
+		}
+
+		public Settings GetActiveSettings()
+		{
+			return dbContext.Settings.Where(x => x.IsActive == true).FirstOrDefault();
 		}
 	}
 }

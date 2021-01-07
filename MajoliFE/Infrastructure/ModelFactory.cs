@@ -11,11 +11,13 @@ namespace MajoliFE.Infrastructure
 		private readonly ICustomerService _customersService;
 		private readonly IInvoiceService _invoiceService;
 		private readonly IInvoiceItemService _invoiceItemService;
-		public ModelFactory(ICustomerService customersService, IInvoiceService invoiceService, IInvoiceItemService invoiceItemService)
+		private readonly ISettingsService _settingsService;
+		public ModelFactory(ICustomerService customersService, IInvoiceService invoiceService, IInvoiceItemService invoiceItemService, ISettingsService settingsService)
 		{
 			_customersService = customersService;
 			_invoiceService = invoiceService;
 			_invoiceItemService = invoiceItemService;
+			_settingsService = settingsService;
 		}
 
 		public CreateOrUpdateInvoiceViewModel PrepareCreateOrUpdateInvoiceVM(int invoiceId)
@@ -24,7 +26,7 @@ namespace MajoliFE.Infrastructure
 			if (invoiceId != 0)
 			{
 				model.Invoice = _invoiceService.GetById(invoiceId);
-				model.Invoice.InvoiceItems = _invoiceItemService.GetByInvoiceId(invoiceId).ToList();
+				//model.Invoice.InvoiceItems = _invoiceItemService.GetByInvoiceId(invoiceId).ToList();
 			}
 			else
 			{
@@ -32,7 +34,8 @@ namespace MajoliFE.Infrastructure
 			}
 			var customers = _customersService.GetAll();
 			model.Customers = new SelectList(customers, "Id", "Name",model.Invoice.CustomerId);
-			model.Settings = new Business.Dtos.SettingsDto();
+			var settings = _settingsService.GetActiveSettings();
+			model.Settings = settings;
 			return model;
 		}
 

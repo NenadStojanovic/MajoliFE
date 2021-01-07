@@ -7,6 +7,7 @@
 		public string BankName { get; set; }
 		public string BankAccount { get; set; }
 		public int PDV { get; set; } = 20;
+		public bool IsActive { get; set; }
 
 	}
 }

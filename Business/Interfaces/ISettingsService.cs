@@ -10,5 +10,7 @@ namespace MajoliFE.Business.Interfaces
 		public SettingsDto GetById(int id);
 
 		public void Update(SettingsDto model);
+
+		public SettingsDto GetActiveSettings();
 	}
 }

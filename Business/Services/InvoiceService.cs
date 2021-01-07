@@ -3,6 +3,7 @@ using MajoliFE.Business.Dtos;
 using MajoliFE.Business.Interfaces;
 using MajoliFE.Data.Data;
 using MajoliFE.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MajoliFE.Business.Services
@@ -12,11 +13,13 @@ namespace MajoliFE.Business.Services
 		private IInvoiceRepository _invoiceRepository;
 		private IInvoiceItemRepository _invoiceItemRepository;
 		private readonly IMapper _mapper;
-		public InvoiceService(IInvoiceRepository invoiceRepository, IMapper mapper, IInvoiceItemRepository invoiceItemRepository)
+		private readonly IReportGenerator _reportGenerator;
+		public InvoiceService(IInvoiceRepository invoiceRepository, IMapper mapper, IInvoiceItemRepository invoiceItemRepository, IReportGenerator reportGenerator)
 		{
 			_invoiceRepository = invoiceRepository;
 			_mapper = mapper;
 			_invoiceItemRepository = invoiceItemRepository;
+			_reportGenerator = reportGenerator;
 		}
 
 		public void Create(InvoiceDto model)
@@ -60,19 +63,18 @@ namespace MajoliFE.Business.Services
 			_invoiceRepository.SaveChanges();
 		}
 
-		public void DownloadInvoice(int invoiceId)
+		public InvoiceReport GenerateInvoice(int invoiceId)
 		{
-			//var invoiceItems = _invoiceItemRepository.GetByInvoiceId(invoiceId);
-			//if (invoiceItems != null)
-			//{
-			//	foreach (var item in invoiceItems)
-			//	{
-			//		_invoiceItemRepository.Delete(item);
-			//	}
-			//}
-			//var invoice = _invoiceRepository.GetById(invoiceId);
-			//_invoiceRepository.Delete(invoice);
-			//_invoiceRepository.SaveChanges();
+			try
+			{
+				var result = _reportGenerator.GenerateInvoice(invoiceId);
+				return result;
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+			
 		}
 	}
 }

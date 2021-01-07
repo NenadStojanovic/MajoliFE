@@ -42,5 +42,12 @@ namespace MajoliFE.Business.Services
 			var mappedResult = _mapper.Map<SettingsDto>(result);
 			return mappedResult;
 		}
+
+		public SettingsDto GetActiveSettings()
+		{
+			var result = _settingsRepository.GetActiveSettings();
+			var mappedResult = _mapper.Map<SettingsDto>(result);
+			return mappedResult;
+		}
 	}
 }

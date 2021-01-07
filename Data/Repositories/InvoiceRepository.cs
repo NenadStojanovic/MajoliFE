@@ -23,7 +23,7 @@ namespace MajoliFE.Data.Repositories
 
 		public override Invoice GetById(int id)
 		{
-			var result = dbContext.Invoices.Where(x=>x.Id==id).Include(c => c.Customer).FirstOrDefault();
+			var result = dbContext.Invoices.Where(x=>x.Id==id).Include(c => c.Customer).Include(x=>x.InvoiceItems).FirstOrDefault();
 			return result;
 		}
 
