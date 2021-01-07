@@ -19,5 +19,6 @@ namespace MajoliFE.Data.Repositories
 			var result = dbContext.InvoiceItems.Where(x => x.InvoiceId == invoiceId).ToList();
 			return result;
 		}
+
 	}
 }

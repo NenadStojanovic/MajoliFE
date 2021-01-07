@@ -168,7 +168,7 @@
 										{
 											var index = i + 1;
 											<tr class="hover invoiceItemRow" id="ItemRow-@index" onclick='CreateOrUpdateInvoiceItem(@Model.Invoice.InvoiceItems[i].Id,@index,"false")'>
-												<td>@index <input type="hidden" class="invoiceItemId" value="@Model.Invoice.InvoiceItems[i].Id" /> <input type="hidden" class="invoiceItemCreatedAt" value="@Model.Invoice.InvoiceItems[i].CreatedAt" /></td>
+												<td class="itemIndex"><span class="itemIndexNum">@index</span> <input type="hidden" class="invoiceItemId" value="@Model.Invoice.InvoiceItems[i].Id" /> <input type="hidden" class="invoiceItemCreatedAt" value="@Model.Invoice.InvoiceItems[i].CreatedAt" /></td>
 												<td class="itemId">@Model.Invoice.InvoiceItems[i].ItemId</td>
 												<td class="itemName">@Model.Invoice.InvoiceItems[i].Name</td>
 												<td class="itemUnit">@Model.Invoice.InvoiceItems[i].Unit</td>

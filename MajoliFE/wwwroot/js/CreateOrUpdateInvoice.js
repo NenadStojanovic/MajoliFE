@@ -48,13 +48,31 @@ $('#createOrUpdateInvoiceForm').submit(function (event) {
 	event.preventDefault();
 	var isValid = $('#createOrUpdateInvoiceForm').valid();
 	if (isValid) {
-		$.blockUI();
-		var invoice = GetInvoiceData();
-		$.post($("#createOrUpdateInvoiceUrl").val(), { invoice: invoice }, function (result) {
-			alertify.notify(successMessage, 'success', 5);
-			window.location.href = $("#invoicesUrl").val();
-			$.unblockUI();
+		$.confirm({
+			title: 'Upozorenje!',
+			content: 'Da li ste sigurni?',
+			type: 'blue',
+			buttons: {
+				Da: {
+					btnClass: 'btn btn-primary',
+					action: function () {
+						$.blockUI();
+						var invoice = GetInvoiceData();
+						$.post($("#createOrUpdateInvoiceUrl").val(), { invoice: invoice }, function (result) {
+							alertify.notify(successMessage, 'success', 5);
+							window.location.href = $("#invoicesUrl").val();
+							$.unblockUI();
+						});
+					}
+				},
+				Ne: {
+					btnClass: 'btn btn-warning',
+					action: function () {
+					}
+				}
+			}
 		});
+		
 	}
 	
 
@@ -136,7 +154,7 @@ function AddOrUpdateInvoiceItem(id, index, IsAdd) {
 
 
 		var newRow = '<tr class="hover invoiceItemRow" id="ItemRow-' + ind + '" onclick="CreateOrUpdateInvoiceItem(' + id + ',' + ind + ',\'false\')">';
-		newRow += '<td>' + ind + ' <input type="hidden" class="invoiceItemId" value="' + id + '"> <input type="hidden" class="invoiceItemCreatedAt" value="' + createdAt + '"></td>';
+		newRow += '<td  class="itemIndex"><span class="itemIndexNum">' + ind + ' </span><input type="hidden" class="invoiceItemId" value="' + id + '"> <input type="hidden" class="invoiceItemCreatedAt" value="' + createdAt + '"></td>';
 		newRow += '<td class="itemId">' + $("#invoiceItemItemId").val() + '</td>';
 		newRow += '<td class="itemName">' + $("#invoiceItemName").val() + '</td>';
 		newRow += '<td class="itemUnit">kom</td>';
@@ -229,12 +247,11 @@ function DeleteInvoiceItem(invoiceItemId, e, evt) {
 					if (invoiceItemId == 0) {
 						e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
 						calculateInvoice();
+						RecalculateIndexes();
 					}
 					else {
-						DeleteInvoiceItemAjax(invoiceItemId,e);
+						DeleteInvoiceItemAjax(invoiceItemId, e);
 					}
-
-					
 				}
 			},
 			Ne: {
@@ -258,6 +275,7 @@ function DeleteInvoiceItemAjax(invoiceItemId,e) {
 			AlertSuccess(false);
 			e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
 			calculateInvoice();
+			RecalculateIndexes();
 		},
 		error: function (response) {
 			AlertError();
@@ -268,5 +286,11 @@ function DeleteInvoiceItemAjax(invoiceItemId,e) {
 	});
 }
 
+function RecalculateIndexes() {
+	$('#invoiceItemsTable tbody tr').each((index, tr) => {
+		index++;
+		$(tr).find(".itemIndexNum").html(index);
+	});
+}
 
 

@@ -206,5 +206,17 @@ namespace MajoliFE.Controllers
 			return Json(Ok());
 
 		}
+
+		[HttpGet]
+		public IActionResult DownloadInvoice(int invoiceId)
+		{
+			if (invoiceId != 0)
+			{
+				_invoiceService.DownloadInvoice(invoiceId);
+
+			}
+			return Json(Ok());
+
+		}
 	}
 }

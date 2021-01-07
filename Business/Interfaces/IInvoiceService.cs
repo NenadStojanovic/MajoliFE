@@ -13,5 +13,6 @@ namespace MajoliFE.Business.Interfaces
 		public void Update(InvoiceDto model);
 
 		public void DeleteInvoice(int id);
+		public void DownloadInvoice(int invoiceId);
 	}
 }

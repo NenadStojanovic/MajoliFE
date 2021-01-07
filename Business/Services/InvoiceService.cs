@@ -59,5 +59,20 @@ namespace MajoliFE.Business.Services
 			_invoiceRepository.Delete(invoice);
 			_invoiceRepository.SaveChanges();
 		}
+
+		public void DownloadInvoice(int invoiceId)
+		{
+			//var invoiceItems = _invoiceItemRepository.GetByInvoiceId(invoiceId);
+			//if (invoiceItems != null)
+			//{
+			//	foreach (var item in invoiceItems)
+			//	{
+			//		_invoiceItemRepository.Delete(item);
+			//	}
+			//}
+			//var invoice = _invoiceRepository.GetById(invoiceId);
+			//_invoiceRepository.Delete(invoice);
+			//_invoiceRepository.SaveChanges();
+		}
 	}
 }

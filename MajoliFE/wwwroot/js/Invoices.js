@@ -38,3 +38,44 @@ function DeleteInvoiceAjax(invoiceId) {
 		}
 	});
 }
+
+function DownloadInvoice(invoiceId) {
+	$.confirm({
+		title: 'Upozorenje!',
+		content: 'Da li ste sigurni?',
+		type: 'blue',
+		buttons: {
+			Da: {
+				btnClass: 'btn btn-primary',
+				action: function () {
+					DownloadInvoiceAjax(invoiceId);
+				}
+			},
+			Ne: {
+				btnClass: 'btn btn-warning',
+				action: function () {
+				}
+			}
+		}
+	});
+}
+
+function DownloadInvoiceAjax(invoiceId) {
+	$.blockUI();
+	$.ajax({
+		type: "GET",
+		url: $("#DownloadInvoiceUrl").val(),
+		data: { invoiceId: invoiceId },
+		contentType: 'application/json',
+		dataType: "json",
+		success: function (response) {
+			AlertSuccess(false);
+		},
+		error: function (response) {
+			AlertError();
+		},
+		complete: function () {
+			$.unblockUI();
+		}
+	});
+}
