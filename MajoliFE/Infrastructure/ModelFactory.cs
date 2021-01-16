@@ -2,6 +2,7 @@
 using MajoliFE.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace MajoliFE.Infrastructure
@@ -50,8 +51,41 @@ namespace MajoliFE.Infrastructure
 		public InvoicesViewModel PrepareInvoicesVM()
 		{
 			var invoices = _invoiceService.GetAll();
-			var model = new InvoicesViewModel() { Invoices = invoices };
+			var model = new InvoicesViewModel() { Invoices = invoices, FilterModel = new InvoicesFilterModel() };
 			model.Invoices = model.Invoices.OrderByDescending(x => x.Id).ToList();
+			var customers = _customersService.GetAll();
+			model.FilterModel.Customers = customers.Select(x => new SelectListItem()
+			{
+				Text = x.Name,
+				Value = x.Id.ToString()
+			});
+			return model;
+		}
+
+		public InvoicesViewModel FilterInvoicesVM(InvoicesFilterModel filterModel)
+		{
+			var invoices = _invoiceService.GetAll();
+			if(filterModel != null)
+			{
+				if (filterModel.DateFrom != null)
+				{
+					var dateFrom = DateTime.ParseExact(filterModel.DateFrom, "dd.MM.yyyy", CultureInfo.CreateSpecificCulture("de-DE"));
+					invoices = invoices.Where(x => x.DateIssued >= dateFrom).ToList();
+				}
+				if (filterModel.DateTo != null)
+				{
+					var dateTo = DateTime.ParseExact(filterModel.DateTo, "dd.MM.yyyy", CultureInfo.CreateSpecificCulture("de-DE"));
+					invoices = invoices.Where(x => x.DateIssued <= dateTo).ToList();
+				}
+			}
+			var model = new InvoicesViewModel() { Invoices = invoices, FilterModel = new InvoicesFilterModel() };
+			model.Invoices = model.Invoices.OrderByDescending(x => x.Id).ToList();
+			var customers = _customersService.GetAll();
+			model.FilterModel.Customers = customers.Select(x => new SelectListItem()
+			{
+				Text = x.Name,
+				Value = x.Id.ToString()
+			});
 			return model;
 		}
 	}

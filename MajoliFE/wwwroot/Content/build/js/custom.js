@@ -2561,7 +2561,12 @@ if (typeof NProgress != 'undefined') {
 				$('#datatable-responsive').DataTable({
 					"language": {
 						"url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Serbian_latin.json"
-					}
+					},
+					dom: 'lBfrtip',
+					buttons: [
+						'excelHtml5',
+						'pdfHtml5'
+					]
 				});
 
 				$('#datatable-scroller').DataTable({

@@ -93,7 +93,7 @@ function GetInvoiceData() {
 	invoice.Total = $("#totalHidden").val().replace(".", ",");
 	invoice.PDV = $("#pdvHidden").val();
 	invoice.Note = $("#note").val();
-	invoice.IsPaid = $("#isPaidHidden").val();
+	invoice.IsPaid = $("#Invoice_IsPaid").is(":checked");
 	invoice.IsIssued = $("#isIssuedHidden").val();
 	invoice.CustomerName = $("#customerName").val();
 	invoice.PartnerId = $("#partnerId").val();
@@ -102,7 +102,6 @@ function GetInvoiceData() {
 	invoice.CustomerMB = $("#customerMb").val();
 	invoice.CreatedAt = $("#createdAt").val();
 	invoice.InvoiceItems = GetInvoiceItems();
-	invoice.IsPaid = $("#Invoice_IsPaid").val();
 	return invoice;
 }
 
@@ -153,7 +152,7 @@ function AddOrUpdateInvoiceItem(id, index, IsAdd) {
 		var totalValue = totalWithoutPDV + pdvValue;
 
 
-		var newRow = '<tr class="hover invoiceItemRow" id="ItemRow-' + ind + '" onclick="CreateOrUpdateInvoiceItem(' + id + ',' + ind + ',\'false\')">';
+		var newRow = '<tr style="background-color: antiquewhite;" class="hover invoiceItemRow" id="ItemRow-' + ind + '" onclick="CreateOrUpdateInvoiceItem(' + id + ',' + ind + ',\'false\')">';
 		newRow += '<td  class="itemIndex"><span class="itemIndexNum">' + ind + ' </span><input type="hidden" class="invoiceItemId" value="' + id + '"> <input type="hidden" class="invoiceItemCreatedAt" value="' + createdAt + '"></td>';
 		newRow += '<td class="itemId">' + $("#invoiceItemItemId").val() + '</td>';
 		newRow += '<td class="itemName">' + $("#invoiceItemName").val() + '</td>';
@@ -292,5 +291,15 @@ function RecalculateIndexes() {
 		$(tr).find(".itemIndexNum").html(index);
 	});
 }
+
+
+$("#Invoice_IsPaid").change(function (event) {
+	var checkbox = event.target;
+	if (checkbox.checked) {
+		$("#isPaidPlaceholder").html('<span style="font-size:16px; color:#26B99A">Plaćen</span>');
+	} else {
+		$("#isPaidPlaceholder").html('<span style="font-size:16px; color:red">Nije plaćen</span>');
+	}
+});
 
 

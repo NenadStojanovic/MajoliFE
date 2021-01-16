@@ -28,11 +28,11 @@
 							}
 							@if (Model.Invoice.IsPaid)
 							{
-								<span style="font-size:16px; color:#26B99A">Plaćen</span>
+								<span id="isPaidPlaceholder"><span style="font-size:16px; color:#26B99A">Plaćen</span></span>
 							}
 							else
 							{
-								<span style="font-size:16px; color:red">Nije plaćen</span>
+								<span id="isPaidPlaceholder"><span style="font-size:16px; color:red">Nije plaćen</span></span>
 							}
 						@Html.CheckBoxFor(model => model.Invoice.IsPaid,new { @class = "js-switch" })
 						</span>

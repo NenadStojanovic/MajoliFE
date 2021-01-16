@@ -85,7 +85,7 @@
 			<div class="animate form login_form">
 				<section class="login_content">
 					<form id="account" method="post">
-						<h4>Use a local account to log in.</h4>
+						<h4><img style="height: 150px;" src="~/Content/build/images/Majoli Logo.png" alt="image"></h4>
 						<hr />
 						<div class="form-group">
 							<label asp-for="Input.Email">Email</label>
@@ -97,30 +97,32 @@
 							<input asp-for="Input.Password" class="form-control" />
 							<span asp-validation-for="Input.Password" class="text-danger"></span>
 						</div>
-						<div class="form-group">
+						@*<div class="form-group">
 							<div class="checkbox">
 								<label asp-for="Input.RememberMe">
 									<input asp-for="Input.RememberMe" />
 									@Html.DisplayNameFor(m => m.Input.RememberMe)
 								</label>
 							</div>
-						</div>
+						</div>*@
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary">Prijavi se</button>
 						</div>
 						<div class="form-group">
-							<p>
-								<a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-							</p>
-							<p>
-								<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-							</p>
+							@*<p>
+								<a id="forgot-password" asp-page="./ForgotPassword">Zaboravili ste šifru?</a>
+							</p>*@
+							@*<p>
+								<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrujte novog korisnika</a>
+							</p>*@
 						</div>
+
+						<h4><img style="height: 180px; margin-top:50px" src="~/Content/build/images/diligent-logo-vertical-transp.png" alt="image"></h4>
 					</form>
 				</section>
 			</div>
 
-			<div id="register" class="animate form registration_form">
+			@*<div id="register" class="animate form registration_form">
 				<section class="login_content">
 					<form>
 						<h1>Create Account</h1>
@@ -155,7 +157,7 @@
 						</div>
 					</form>
 				</section>
-			</div>
+			</div>*@
 		</div>
 	</div>
 </body>

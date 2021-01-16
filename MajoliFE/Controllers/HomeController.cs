@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MajoliFE.Controllers
 {
-	//[Authorize]
+	[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -124,15 +124,22 @@ namespace MajoliFE.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Invoices()
+		public IActionResult Invoices(InvoicesFilterModel filterModel)
 		{
-			var model = _modelFactory.PrepareInvoicesVM();
+			var model = _modelFactory.FilterInvoicesVM(filterModel);
 			if (TempData["ShowMessage"] != null)
 			{
 				model.ShowMessage = (bool)TempData["ShowMessage"];
 			}
 			return View(model);
 		}
+
+		//[HttpPost]
+		//public IActionResult Invoices(InvoicesFilterModel filterModel)
+		//{
+		//	var model = _modelFactory.FilterInvoicesVM(filterModel);
+		//	return View(model);
+		//}
 		[HttpGet]
 		public IActionResult CreateOrUpdateInvoice(int id)
 		{

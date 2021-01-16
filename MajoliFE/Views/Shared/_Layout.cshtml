@@ -12,6 +12,7 @@
 
 	<title>Majoli Financial Engine | </title>
 
+	@*<link href="~/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">*@
 	<!-- Bootstrap -->
 	<link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Font Awesome -->
@@ -54,7 +55,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Majoli FE</span></a>
+						<a href="@Url.Action("Index","Home")" class="site_title"><img style="height: 45px;" src="~/Content/build/images/majoli_logo_horizontal.png" alt="image"></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -65,8 +66,13 @@
 							@*<img src="images/img.jpg" alt="~/Content." class="img-circle profile_img">*@
 						</div>
 						<div class="profile_info">
-							<span>Dobrodošli,</span>
-							<h2>John Doe</h2>
+
+							@if (User != null && User.Identity != null)
+							{
+								<span>Dobrodošli,</span>
+								<h2>@User.Identity.Name</h2>
+							}
+
 						</div>
 					</div>
 					<!-- /menu profile quick info -->
@@ -100,18 +106,18 @@
 					<!-- /sidebar menu -->
 					<!-- /menu footer buttons -->
 					<div class="sidebar-footer hidden-small">
-						<a data-toggle="tooltip" data-placement="top" title="Settings">
+						<a data-toggle="tooltip" data-placement="top" title="Podešavanja">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
-						<a data-toggle="tooltip" data-placement="top" title="FullScreen">
-							<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+						<a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Page("/", new { area = "" })" data-toggle="tooltip" data-placement="top" title="Dodaj korisnika">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						</a>
-						<a data-toggle="tooltip" data-placement="top" title="Lock">
-							<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-						</a>
-						<a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-						</a>
+						@*<a data-toggle="tooltip" data-placement="top" title="Lock">
+								<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+							</a>
+							<a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+								<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+							</a>*@
 					</div>
 					<!-- /menu footer buttons -->
 				</div>
@@ -132,15 +138,19 @@
 									<span class=" fa fa-angle-down"></span>
 								</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
+									@*<li><a href="javascript:;"> Profile</a></li>
+										<li>
+											<a href="javascript:;">
+												<span class="badge bg-red pull-right">50%</span>
+												<span>Settings</span>
+											</a>
+										</li>
+										<li><a href="javascript:;">Help</a></li>*@
 									<li>
-										<a href="javascript:;">
-											<span class="badge bg-red pull-right">50%</span>
-											<span>Settings</span>
-										</a>
+										<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+											<input type="submit" value="Odjavi se" class="logoutbtn" aria-hidden="true" />
+										</form>@*<a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>*@
 									</li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 								</ul>
 							</li>
 
@@ -170,6 +180,7 @@
 	<!-- jQuery -->
 	<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	@*<script src="~/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>*@
 	<script src="~/lib/jquery-validation/dist/messages_sr_lat.js"></script>
 	<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -187,10 +198,14 @@
 	<script src="~/Content/vendors/DateJS/build/date.js"></script>
 	<!-- bootstrap-daterangepicker -->
 	<script src="~/Content/vendors/moment/min/moment.min.js"></script>
+
 	<script src="~/Content/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<script src="~/Content/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 	<script src="~/Content/vendors/bootstrap-datepicker/vitalets-bootstrap-datepicker-c7af15b/js/bootstrap-datepicker.js"></script>
+	<script src="~/lib/bootstrap-datepicker-languages/bootstrap-datepicker.sr-latin.js"></script>
 	<!-- Datatables -->
+	<script src="~/Content/vendors/jszip/dist/jszip.min.js"></script>
+	<script src="~/Content/vendors/pdfmake/build/pdfmake.min.js"></script>
 	<script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 	<script src="~/Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 	<script src="~/Content/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -203,8 +218,8 @@
 	<script src="~/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 	<script src="~/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script src="~/Content/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="~/Content/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="~/Content/vendors/pdfmake/build/pdfmake.min.js"></script>
+
+
 	<script src="~/Content/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 	<!-- Switchery -->
@@ -214,7 +229,7 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="~/Content/src/js/helpers/smartresize.js"></script>
-	<script src="~/Content/build/js/custom.min.js"></script>
+	<script src="~/Content/build/js/custom.js"></script>
 
 	<!-- JQery Confirm -->
 	<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>

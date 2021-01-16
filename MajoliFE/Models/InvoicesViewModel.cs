@@ -9,5 +9,6 @@ namespace MajoliFE.Models
 	public class InvoicesViewModel : BaseViewModel
 	{
 		public IEnumerable<InvoiceDto> Invoices { get; set; }
+		public InvoicesFilterModel FilterModel { get; set; }
 	}
 }

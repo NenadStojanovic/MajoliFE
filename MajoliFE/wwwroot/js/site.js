@@ -24,7 +24,15 @@ $(document).ready(function () {
 		format: "dd.mm.yyyy",
 		autoclose: true,
 		todayBtn: true,
+		language:"sr-latin"
 	});
+
+	//Hack for missing datepicker arrows
+	$('.prev i').removeClass();
+	$('.prev i').addClass("fa fa-chevron-left");
+
+	$('.next i').removeClass();
+	$('.next i').addClass("fa fa-chevron-right");
 
 });
 
