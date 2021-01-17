@@ -88,5 +88,14 @@ namespace MajoliFE.Infrastructure
 			});
 			return model;
 		}
+
+		public SettingsViewModel PrepareSettingsVM()
+		{
+			var model = new SettingsViewModel();
+			var result = _settingsService.GetActiveSettings();
+			model.Settings = result;
+			return model;
+		}
+
 	}
 }

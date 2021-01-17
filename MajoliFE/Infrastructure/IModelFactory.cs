@@ -14,5 +14,7 @@ namespace MajoliFE.Infrastructure
 		public CreateOrUpdateInvoiceViewModel PrepareCreateOrUpdateInvoiceVM(int customerId);
 
 		public InvoicesViewModel FilterInvoicesVM(InvoicesFilterModel filterModel);
+
+		public SettingsViewModel PrepareSettingsVM();
 	}
 }

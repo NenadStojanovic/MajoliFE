@@ -24,14 +24,20 @@ namespace MajoliFE.Controllers
 		private readonly ICustomerService _customerService;
 		private readonly IInvoiceService _invoiceService;
 		private readonly IInvoiceItemService _invoiceItemService;
-
-		public HomeController(ILogger<HomeController> logger, IModelFactory modelFactory, ICustomerService customerService, IInvoiceService invoiceService, IInvoiceItemService invoiceItemService)
+		private readonly ISettingsService _settingsService;
+		public HomeController(ILogger<HomeController> logger, 
+			IModelFactory modelFactory, 
+			ICustomerService customerService, 
+			IInvoiceService invoiceService, 
+			IInvoiceItemService invoiceItemService,
+			ISettingsService settingsService)
 		{
 			_logger = logger;
 			_modelFactory = modelFactory;
 			_customerService = customerService;
 			_invoiceService = invoiceService;
 			_invoiceItemService = invoiceItemService;
+			_settingsService = settingsService;
 		}
 
 		public IActionResult Index()
@@ -255,6 +261,28 @@ namespace MajoliFE.Controllers
 				//           redirect to another controller action - whatever fits with your application
 				return new EmptyResult();
 			}
+		}
+		[HttpGet]
+		public ActionResult Settings()
+		{
+			var model = _modelFactory.PrepareSettingsVM();
+			if (TempData["ShowMessage"] != null)
+			{
+				model.ShowMessage = (bool)TempData["ShowMessage"];
+			}
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult Settings(SettingsViewModel model)
+		{
+			if(model != null && model.Settings != null && model.Settings.Id != 0)
+			{
+				_settingsService.Update(model.Settings);
+			}
+
+			TempData["ShowMessage"] = true;
+			return RedirectToAction("Settings");
 		}
 	}
 

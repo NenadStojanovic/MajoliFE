@@ -106,7 +106,7 @@
 					<!-- /sidebar menu -->
 					<!-- /menu footer buttons -->
 					<div class="sidebar-footer hidden-small">
-						<a data-toggle="tooltip" data-placement="top" title="Podešavanja">
+						<a data-toggle="tooltip" data-placement="top" title="Podešavanja" asp-controller="Home" asp-action="Settings">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</a>
 						<a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Page("/", new { area = "" })" data-toggle="tooltip" data-placement="top" title="Dodaj korisnika">

@@ -2562,6 +2562,7 @@ if (typeof NProgress != 'undefined') {
 					"language": {
 						"url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Serbian_latin.json"
 					},
+					order: [],
 					dom: 'lBfrtip',
 					buttons: [
 						'excelHtml5',
