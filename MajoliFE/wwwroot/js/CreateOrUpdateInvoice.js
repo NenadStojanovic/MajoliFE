@@ -302,4 +302,24 @@ $("#Invoice_IsPaid").change(function (event) {
 	}
 });
 
+function ExitInvoice() {
+	$.confirm({
+		title: 'Upozorenje!',
+		content: 'Da li ste sigurni da želite da napustite ovaj prozor? Nesnimljene promene će biti izgubljene.',
+		type: 'orange',
+		buttons: {
+			Da: {
+				btnClass: 'btn btn-primary',
+				action: function () {
+					window.location.href = $("#invoicesUrl").val();
+				}
+			},
+			Ne: {
+				btnClass: 'btn btn-warning',
+				action: function () {
+				}
+			}
+		}
+	});
+}
 
