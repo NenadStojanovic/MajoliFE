@@ -2710,4 +2710,11 @@
     <Folder Include="wwwroot\lib\jquery-confirm\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Update="Templates\invoice_majoli_template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
