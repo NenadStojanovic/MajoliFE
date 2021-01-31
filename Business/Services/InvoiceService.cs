@@ -5,6 +5,7 @@ using MajoliFE.Data.Data;
 using MajoliFE.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MajoliFE.Business.Services
 {
@@ -75,6 +76,31 @@ namespace MajoliFE.Business.Services
 				throw ex;
 			}
 			
+		}
+
+		public InvoiceStatistics GetInvoiceStatistics(DateTime? dateFrom = null, DateTime? dateTo = null)
+		{
+			if(dateFrom == null)
+			{
+				dateFrom = DateTime.MinValue;
+			}
+			if(dateTo == null)
+			{
+				dateTo = DateTime.MaxValue;
+			}
+			InvoiceStatistics model = new InvoiceStatistics();
+			var invoces = _invoiceRepository.GetInvocesFromRange((DateTime)dateFrom, (DateTime)dateTo);
+			if(invoces != null && invoces.Count>0)
+			{
+				model.TotalNumOfInvoices = invoces.Count;
+				model.TotalNumOfIssuedInvoices = invoces.Where(x => x.IsIssued == true).ToList()?.Count??0;
+				model.TotalNumOfPaidInvoices = invoces.Where(x => x.IsPaid == true).ToList()?.Count ?? 0;
+				model.TotalAmount = invoces.Sum(x => x.Total);
+				model.TotalPDVAmount = invoces.Sum(x => x.PDV);
+				model.TotalBaseAmount = invoces.Sum(x => x.BaseTotal);
+				model.TotalPaidAmount = invoces.Sum(x => x.TotalPaid);
+			}
+			return model;
 		}
 	}
 }

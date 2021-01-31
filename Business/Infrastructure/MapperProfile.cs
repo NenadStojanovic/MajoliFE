@@ -15,6 +15,8 @@ namespace MajoliFE.Business
 			CreateMap<Invoice, InvoiceDto>().ReverseMap();
 			CreateMap<InvoiceItem, InvoiceItemDto>().ReverseMap();
 			CreateMap<Settings, SettingsDto>().ReverseMap();
+			CreateMap<Vendor, VendorDto>().ReverseMap();
+			CreateMap<VendorInvoice, VendorInvoiceDto>().ReverseMap();
 		}
 	}
 }

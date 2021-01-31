@@ -24,6 +24,8 @@ namespace MajoliFE.Data
 			services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 			services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
 			services.AddScoped<ISettingsRepository, SettingsRepository>();
+			services.AddScoped<IVendorInvoiceRepository, VendorInvoiceRepository>();
+			services.AddScoped<IVendorRepository, VendorRepository>();
 
 
 		}

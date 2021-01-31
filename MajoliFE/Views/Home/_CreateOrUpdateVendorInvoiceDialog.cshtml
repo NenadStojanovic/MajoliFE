@@ -1,0 +1,73 @@
+﻿@model MajoliFE.Models.CreateOrUpdateVendorInvoicesViewModel
+<div class="modal" id="CreateOrUpdateVendorInvoiceDialog" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<form class="form-label-left input_mask" id="CreateOrUpdateVendorInvoiceDialogForm" asp-controller="Home" asp-action="CreateOrUpdateVendorInvoiceDialog" method="post">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" style="display: inline;">Uredi/Dodaj ulazni račun</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body row">
+					<input type="hidden" value="@Model.VendorInvoice.Id" name="Id" id="Id" />
+					<input type="hidden" value="@Model.VendorInvoice.CreatedAt" name="CreatedAt" id="CreatedAt" />
+					<input type="hidden" value="@Model.VendorInvoice.VendorId" name="VendorId" id="VendorId" />
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Dobavljač<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<select class="chosen-select" id="VendorIdChosen" asp-items="@Model.Vendors" required></select>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Datum<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input class="form-control datepicker" type="text" id="Date" name="Date" value="@Model.VendorInvoice.Date.ToShortDateString()" required="required">
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Ukupno<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input type="number" class="form-control" value="@Model.VendorInvoice.Total" id="Total" name="Total" min="1" required>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Ukupno plaćeno</label>
+						<div class="col-md-9 col-sm-9">
+							<input type="number" class="form-control" value="@Model.VendorInvoice.TotalPaid" id="TotalPaid" name="TotalPaid">
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Model</label>
+						<div class="col-md-9 col-sm-9">
+							<input type="text" class="form-control" value="@Model.VendorInvoice.Model" id="Model" name="Model">
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Poziv na broj</label>
+						<div class="col-md-9 col-sm-9">
+							<input type="text" class="form-control" value="@Model.VendorInvoice.ReferenceNumber" id="ReferenceNumber" name="ReferenceNumber">
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Beleška</label>
+						<div class="col-md-9 col-sm-9">
+							<textarea class="form-control" id="Note" name="Note">@Model.VendorInvoice.Note</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Snimi</button>
+					<button type="button" class="btn btn-warning" data-dismiss="modal">Zatvori</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	$(document).ready(function () {
+		$("#CreateOrUpdateVendorInvoiceDialogForm").validate({errorPlacement: function(error, element){}});
+	});
+	var vendorId = @Model.VendorInvoice.VendorId;
+</script>

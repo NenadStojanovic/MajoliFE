@@ -1,0 +1,78 @@
+﻿@model MajoliFE.Models.VendorsViewModel
+@{
+	ViewData["Title"] = "Dobavljači";
+}
+
+<div class="">
+	<div class="page-title">
+		<div class="title_left">
+			<h3>Dobavljači</h3>
+		</div>
+
+		<div class="title_right">
+			<div class="form-group pull-right top_search">
+				<div class="input-group">
+					<button id="addNewVendorBtn" onclick="CreateOrUpdateVendor(0)" class="btn btn-primary" type="button">Dodaj novi</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Ime</th>
+								<th>Ulica</th>
+								<th>Grad</th>
+								<th>Zip</th>
+								<th>PIB</th>
+								<th>MB</th>
+								<th>Akcije</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var vendor in Model.Vendors)
+							{
+								<tr>
+									<td>@vendor.Id</td>
+									<td>@vendor.Name</td>
+									<td>@vendor.Street</td>
+									<td>@vendor.City</td>
+									<td>@vendor.Zip</td>
+									<td>@vendor.PIB</td>
+									<td>@vendor.MB</td>
+									<td>
+										<button onclick="CreateOrUpdateVendor(@vendor.Id)" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button>
+										<button onclick="DeleteVendor(@vendor.Id)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="DeleteVendorUrl" value="@Url.Action("DeleteVendor","Home")" />
+<div id="CreateOrUpdateVendorDialogHolder">
+
+</div>
+@if (Model.ShowMessage)
+{
+	@Html.HiddenFor(m => m.Message);
+}
+
+@section Scripts
+{
+	<script src="~/js/Vendors.js"></script>
+}
+
+

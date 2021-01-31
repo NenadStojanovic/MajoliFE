@@ -25,12 +25,16 @@ namespace MajoliFE.Controllers
 		private readonly IInvoiceService _invoiceService;
 		private readonly IInvoiceItemService _invoiceItemService;
 		private readonly ISettingsService _settingsService;
+		private readonly IVendorService _vendorService;
+		private readonly IVendorInvoiceService _vendorInvoiceService;
 		public HomeController(ILogger<HomeController> logger, 
 			IModelFactory modelFactory, 
 			ICustomerService customerService, 
 			IInvoiceService invoiceService, 
 			IInvoiceItemService invoiceItemService,
-			ISettingsService settingsService)
+			ISettingsService settingsService,
+			IVendorService vendorService,
+			IVendorInvoiceService vendorInvoiceService)
 		{
 			_logger = logger;
 			_modelFactory = modelFactory;
@@ -38,14 +42,17 @@ namespace MajoliFE.Controllers
 			_invoiceService = invoiceService;
 			_invoiceItemService = invoiceItemService;
 			_settingsService = settingsService;
+			_vendorService = vendorService;
+			_vendorInvoiceService = vendorInvoiceService;
 		}
 
 		public IActionResult Index()
 		{
 			//throw new Exception("Test");
-		    //_customerService.CreateCustomer(new CustomerDto { Name = "Pera" });
+			//_customerService.CreateCustomer(new CustomerDto { Name = "Pera" });
 			//var model = _modelFactory.PrepareCustomersVM();
-			return View();
+			var model = _modelFactory.PrepareIndexViewModel();
+			return View(model);
 		}
 
 		[HttpGet]
@@ -60,10 +67,40 @@ namespace MajoliFE.Controllers
 		}
 
 		[HttpGet]
+		public IActionResult Vendors()
+		{
+			var model = _modelFactory.PrepareVendorsVM();
+			if (TempData["ShowMessage"] != null)
+			{
+				model.ShowMessage = (bool)TempData["ShowMessage"];
+			}
+			return View(model);
+		}
+
+		[HttpGet]
+		public IActionResult VendorInvoices()
+		{
+			var model = _modelFactory.PrepareVendorInvoicesVM();
+			if (TempData["ShowMessage"] != null)
+			{
+				model.ShowMessage = (bool)TempData["ShowMessage"];
+			}
+			return View(model);
+		}
+
+		[HttpGet]
+		public IActionResult CreateOrUpdateVendorInvoiceDialog(int vendorInvoiceId)
+		{
+			var model = new CreateOrUpdateVendorInvoicesViewModel();
+			model = _modelFactory.PrepareCreateOrUpdateVendorInvoicesViewModel(vendorInvoiceId);
+			return PartialView("_CreateOrUpdateVendorInvoiceDialog", model);
+		}
+
+		[HttpGet]
 		public IActionResult CreateOrUpdateCustomerDialog(int customerId)
 		{
 			var model = new CustomerDto();
-			if(customerId == 0)
+			if (customerId == 0)
 			{
 				return PartialView("_CreateOrUpdateCustomerDialog", model);
 			}
@@ -72,6 +109,21 @@ namespace MajoliFE.Controllers
 				model = _customerService.GetById(customerId);
 			}
 			return PartialView("_CreateOrUpdateCustomerDialog", model);
+		}
+
+		[HttpGet]
+		public IActionResult CreateOrUpdateVendorDialog(int vendorId)
+		{
+			var model = new VendorDto();
+			if (vendorId == 0)
+			{
+				return PartialView("_CreateOrUpdateVendorDialog", model);
+			}
+			else
+			{
+				model = _vendorService.GetById(vendorId);
+			}
+			return PartialView("_CreateOrUpdateVendorDialog", model);
 		}
 
 		[HttpGet]
@@ -116,6 +168,36 @@ namespace MajoliFE.Controllers
 			}
 			TempData["ShowMessage"] = true;
 			return RedirectToAction("Customers");
+		}
+
+		[HttpPost]
+		public IActionResult CreateOrUpdateVendorInvoiceDialog(VendorInvoiceDto vendorInvoice)
+		{
+			if (vendorInvoice.Id == 0)
+			{
+				_vendorInvoiceService.Create(vendorInvoice);
+			}
+			else
+			{
+				_vendorInvoiceService.Update(vendorInvoice);
+			}
+			TempData["ShowMessage"] = true;
+			return RedirectToAction("VendorInvoices");
+		}
+
+		[HttpPost]
+		public IActionResult CreateOrUpdateVendorDialog(VendorDto vendor)
+		{
+			if (vendor.Id == 0)
+			{
+				_vendorService.Create(vendor);
+			}
+			else
+			{
+				_vendorService.Update(vendor);
+			}
+			TempData["ShowMessage"] = true;
+			return RedirectToAction("Vendors");
 		}
 
 		public IActionResult Privacy()
@@ -192,6 +274,36 @@ namespace MajoliFE.Controllers
 			else
 			{
 				return Json(true);
+			}
+
+		}
+
+		[HttpGet]
+		public IActionResult DeleteVendor(int vendorId)
+		{
+			if (vendorId != 0)
+			{
+				var result = _vendorService.Delete(vendorId);
+				return Json(result);
+			}
+			else
+			{
+				return Json(true);
+			}
+
+		}
+
+		[HttpGet]
+		public IActionResult DeleteVendorInvoice(int vendorInvoiceId)
+		{
+			if (vendorInvoiceId != 0)
+			{
+				_vendorInvoiceService.Delete(vendorInvoiceId);
+				return Json("OK");
+			}
+			else
+			{
+				return Json("OK");
 			}
 
 		}

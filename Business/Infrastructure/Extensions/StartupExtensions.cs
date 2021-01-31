@@ -20,6 +20,8 @@ namespace MajoliFE.Business
 			services.AddScoped<IInvoiceItemService, InvoiceItemService>();
 			services.AddScoped<ISettingsService, SettingsService>();
 			services.AddScoped<IReportGenerator, ReportGenerator>();
+			services.AddScoped<IVendorService, VendorService>();
+			services.AddScoped<IVendorInvoiceService, VendorinvoiceService>();
 
 
 			var mapperConfiguration = new MapperConfiguration(mc =>

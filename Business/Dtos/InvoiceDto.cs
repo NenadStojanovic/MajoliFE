@@ -14,6 +14,7 @@ namespace MajoliFE.Business.Dtos
 		public int CustomerId { get; set; }
 		public float BaseTotal { get; set; }
 		public float Total { get; set; }
+		public float TotalPaid { get; set; }
 		public int PDV { get; set; }
 		public string Note { get; set; }
 		public bool IsPaid { get; set; }

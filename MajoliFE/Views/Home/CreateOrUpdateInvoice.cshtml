@@ -16,7 +16,7 @@
 				<div class="x_content">
 					<form class="" id="createOrUpdateInvoiceForm" action="" method="post">
 					
-						<span class="section">
+						<span class="section" style="padding-bottom: 15px;">
 							Osnovne informacije:
 							@if (Model.Invoice.IsIssued)
 							{
@@ -34,7 +34,15 @@
 							{
 								<span id="isPaidPlaceholder"><span style="font-size:16px; color:red">Nije plaćen</span></span>
 							}
-						@Html.CheckBoxFor(model => model.Invoice.IsPaid,new { @class = "js-switch" })
+						<div class="col-md-3 col-sm-3 pull-right">
+							<div class="field item form-group">
+								<label class="col-form-label col-md-3 col-sm-3  label-align" style="font-size: 16px;font-weight: normal;padding-top: 6px;">Plaćeno<span>*</span></label>
+								<div class="col-md-9 col-sm-9">
+									<input class="form-control" id="totalPaid" name="totalPaid" type="number" value="@Model.Invoice.TotalPaid" required="required">
+								</div>
+							</div>
+						</div>
+								@Html.CheckBoxFor(model => model.Invoice.IsPaid, new { @class = "js-switch" })
 						</span>
 						<div class="col-md-7 col-sm-12">
 							<div class="col-md-6 col-sm-6">
@@ -100,7 +108,7 @@
 								<input class="form-control" id="customerName" name="customerName" placeholder="Naziv kupca" value="@Model.Invoice.CustomerName" required readonly>
 							</div>
 							<div class="col-md-3 col-sm-3">
-								<input class="form-control" id="partnerId" name="partnerId" placeholder="PartnerId" value="@Model.Invoice.PartnerId" required readonly>
+								<input class="form-control" id="partnerId" name="partnerId" placeholder="PartnerId" value="@Model.Invoice.PartnerId" readonly>
 							</div>
 							<div class="col-md-12 col-sm-12">
 								<textarea class="form-control" id="customerAddress" name="customerAddress" placeholder="Adresa" required readonly>@Model.Invoice.CustomerAddress</textarea>
@@ -312,6 +320,7 @@
 <input type="hidden" id="GetCustomerUrl" value="@Url.Action("GetCustomerById","Home")" />
 <input type="hidden" id="baseTotalHidden" value="0" />
 <input type="hidden" id="totalHidden" value="0" />
+<input type="hidden" id="totalPaidHidden" value="@Model.Invoice.TotalPaid" />
 <input type="hidden" id="pdvHidden" value="0" />
 <input type="hidden" id="isPaidHidden" value="@Model.Invoice.IsPaid.ToString()" />
 <input type="hidden" id="isIssuedHidden" value="@Model.Invoice.IsIssued.ToString()" />

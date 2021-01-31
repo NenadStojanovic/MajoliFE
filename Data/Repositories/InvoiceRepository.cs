@@ -2,6 +2,7 @@
 using MajoliFE.Data.DbContexts;
 using MajoliFE.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,6 +31,12 @@ namespace MajoliFE.Data.Repositories
 		public List<Invoice> GetInvocesByCustomerId(int customerId)
 		{
 			var result = dbContext.Invoices.Where(x => x.CustomerId == customerId).ToList();
+			return result;
+		}
+
+		public List<Invoice> GetInvocesFromRange(DateTime dateFrom, DateTime dateTo)
+		{
+			var result = dbContext.Invoices.Where(x => x.DateIssued >= dateFrom && x.DateIssued <= dateTo).ToList();
 			return result;
 		}
 	}

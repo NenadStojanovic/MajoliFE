@@ -16,5 +16,10 @@ namespace MajoliFE.Infrastructure
 		public InvoicesViewModel FilterInvoicesVM(InvoicesFilterModel filterModel);
 
 		public SettingsViewModel PrepareSettingsVM();
+		public IndexViewModel PrepareIndexViewModel();
+
+		public VendorsViewModel PrepareVendorsVM();
+		public VendorInvoicesViewModel PrepareVendorInvoicesVM();
+		public CreateOrUpdateVendorInvoicesViewModel PrepareCreateOrUpdateVendorInvoicesViewModel(int id);
 	}
 }

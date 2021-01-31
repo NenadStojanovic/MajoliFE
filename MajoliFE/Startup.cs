@@ -38,9 +38,9 @@ namespace MajoliFE
 					Configuration.GetConnectionString("DefaultConnection")));
 			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
-			services.AddControllersWithViews();
-			services.AddRazorPages()
-				.AddRazorRuntimeCompilation();
+			services.AddControllersWithViews().AddRazorRuntimeCompilation();
+			services.AddRazorPages();
+				
 
 			services.AddSingleton<ITempDataProvider, SessionStateTempDataProvider>();
 			services.AddSession();

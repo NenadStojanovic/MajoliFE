@@ -1,0 +1,41 @@
+﻿@model MajoliFE.Business.Dtos.InvoiceStatistics
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Statistika</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="col-md-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<td>Ukupno računa</td>
+								<td>Ukupno izdatih računa</td>
+								<td>Ukupno plaćenih računa</td>
+								<td>Ukupno bez PDV-a</td>
+								<td>Ukupno samo PDV</td>
+								<td>Ukupno sa PDV-om</td>
+								<td>Ukupno plaćeno</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>@Model.TotalNumOfInvoices</td>
+								<td>@Model.TotalNumOfIssuedInvoices/@Model.TotalNumOfInvoices</td>
+								<td>@Model.TotalNumOfPaidInvoices/@Model.TotalNumOfInvoices</td>
+								<td>@Model.TotalBaseAmount.ToString("N2")</td>
+								<td>@Model.TotalPDVAmount.ToString("N2")</td>
+								<td>@Model.TotalAmount.ToString("N2")</td>
+								<td>@Model.TotalPaidAmount.ToString("N2")/@Model.TotalAmount.ToString("N2")</td>
+								<td class="tdPDV"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -10,15 +10,19 @@ namespace MajoliFE.Infrastructure
 	public class ModelFactory : IModelFactory
 	{
 		private readonly ICustomerService _customersService;
+		private readonly IVendorService _vendorService;
 		private readonly IInvoiceService _invoiceService;
 		private readonly IInvoiceItemService _invoiceItemService;
 		private readonly ISettingsService _settingsService;
-		public ModelFactory(ICustomerService customersService, IInvoiceService invoiceService, IInvoiceItemService invoiceItemService, ISettingsService settingsService)
+		private readonly IVendorInvoiceService _vendorInvoiceService;
+		public ModelFactory(ICustomerService customersService, IInvoiceService invoiceService, IInvoiceItemService invoiceItemService, ISettingsService settingsService, IVendorService vendorService, IVendorInvoiceService vendorInvoiceService)
 		{
 			_customersService = customersService;
 			_invoiceService = invoiceService;
 			_invoiceItemService = invoiceItemService;
 			_settingsService = settingsService;
+			_vendorService = vendorService;
+			_vendorInvoiceService = vendorInvoiceService;
 		}
 
 		public CreateOrUpdateInvoiceViewModel PrepareCreateOrUpdateInvoiceVM(int invoiceId)
@@ -48,6 +52,14 @@ namespace MajoliFE.Infrastructure
 			return model;
 		}
 
+		public VendorsViewModel PrepareVendorsVM()
+		{
+			var vendors = _vendorService.GetAll();
+			var model = new VendorsViewModel() { Vendors = vendors};
+			model.Vendors = model.Vendors.OrderByDescending(x => x.Id).ToList();
+			return model;
+		}
+
 		public InvoicesViewModel PrepareInvoicesVM()
 		{
 			var invoices = _invoiceService.GetAll();
@@ -59,6 +71,34 @@ namespace MajoliFE.Infrastructure
 				Text = x.Name,
 				Value = x.Id.ToString()
 			});
+			return model;
+		}
+
+		public CreateOrUpdateVendorInvoicesViewModel PrepareCreateOrUpdateVendorInvoicesViewModel(int id)
+		{
+			var model = new CreateOrUpdateVendorInvoicesViewModel();
+			if(id==0)
+			{
+				model.VendorInvoice = new Business.Dtos.VendorInvoiceDto();
+			}
+			else
+			{
+				model.VendorInvoice = _vendorInvoiceService.GetById(id);
+			}
+			var vendors = _vendorService.GetAll();
+			model.Vendors = vendors.Select(x => new SelectListItem()
+			{
+				Text = x.Name,
+				Value = x.Id.ToString()
+			});
+			return model;
+		}
+		public VendorInvoicesViewModel PrepareVendorInvoicesVM()
+		{
+			var vendoriInvoices = _vendorInvoiceService.GetAll();
+			var model = new VendorInvoicesViewModel() { VendorInvoices = vendoriInvoices};
+			model.VendorInvoices = model.VendorInvoices.OrderByDescending(x => x.Id).ToList();
+			var customers = _customersService.GetAll();
 			return model;
 		}
 
@@ -86,6 +126,7 @@ namespace MajoliFE.Infrastructure
 				Text = x.Name,
 				Value = x.Id.ToString()
 			});
+			model.InvoiceStatistics = _invoiceService.GetInvoiceStatistics();
 			return model;
 		}
 
@@ -94,6 +135,13 @@ namespace MajoliFE.Infrastructure
 			var model = new SettingsViewModel();
 			var result = _settingsService.GetActiveSettings();
 			model.Settings = result;
+			return model;
+		}
+
+		public IndexViewModel PrepareIndexViewModel()
+		{
+			IndexViewModel model = new IndexViewModel();
+			model.InvoiceStatistics = _invoiceService.GetInvoiceStatistics();
 			return model;
 		}
 

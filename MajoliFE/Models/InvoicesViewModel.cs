@@ -10,5 +10,6 @@ namespace MajoliFE.Models
 	{
 		public IEnumerable<InvoiceDto> Invoices { get; set; }
 		public InvoicesFilterModel FilterModel { get; set; }
+		public InvoiceStatistics InvoiceStatistics { get; set; }
 	}
 }

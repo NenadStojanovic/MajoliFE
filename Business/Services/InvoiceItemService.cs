@@ -63,9 +63,5 @@ namespace MajoliFE.Business.Services
 			}
 		}
 
-		public void RecalculateOrderItemIndex(int invoiceItemId)
-		{
-
-		}
 	}
 }

@@ -102,6 +102,7 @@ function GetInvoiceData() {
 	invoice.CustomerMB = $("#customerMb").val();
 	invoice.CreatedAt = $("#createdAt").val();
 	invoice.InvoiceItems = GetInvoiceItems();
+	invoice.TotalPaid = $("#totalPaid").val().replace(".", ",");
 	return invoice;
 }
 
@@ -297,8 +298,10 @@ $("#Invoice_IsPaid").change(function (event) {
 	var checkbox = event.target;
 	if (checkbox.checked) {
 		$("#isPaidPlaceholder").html('<span style="font-size:16px; color:#26B99A">Plaćen</span>');
+		$("#totalPaid").val(parseFloat($("#totalHidden").val()).toFixed(2));
 	} else {
 		$("#isPaidPlaceholder").html('<span style="font-size:16px; color:red">Nije plaćen</span>');
+		$("#totalPaid").val(parseFloat($("#totalPaidHidden").val()).toFixed(2));
 	}
 });
 

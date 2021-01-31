@@ -17,6 +17,8 @@ namespace MajoliFE.Data.DbContexts
 		public virtual DbSet<Invoice> Invoices { get; set; }
 		public virtual DbSet<InvoiceItem> InvoiceItems { get; set; }
 		public virtual DbSet<Settings> Settings { get; set; }
+		public virtual DbSet<Vendor> Vendors{ get; set; }
+		public virtual DbSet<VendorInvoice> VendorInvoices { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

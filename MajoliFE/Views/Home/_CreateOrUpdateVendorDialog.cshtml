@@ -1,10 +1,10 @@
-﻿@model MajoliFE.Business.Dtos.CustomerDto
-<div class="modal" id="CreateOrUpdateCustomerDialog" tabindex="-1" role="dialog">
+﻿@model MajoliFE.Business.Dtos.VendorDto
+<div class="modal" id="CreateOrUpdateVendorDialog" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
-		<form class="form-label-left input_mask" id="CreateOrUpdateCustomerDialogForm" asp-controller="Home" asp-action="CreateOrUpdateCustomerDialog" method="post">
+		<form class="form-label-left input_mask" id="CreateOrUpdateVendorDialogForm" asp-controller="Home" asp-action="CreateOrUpdateVendorDialog" method="post">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" style="display: inline;">Uredi/Dodaj korisnika</h5>
+					<h5 class="modal-title" style="display: inline;">Uredi/Dodaj dobavljača</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -14,10 +14,6 @@
 					@Html.HiddenFor(x => x.CreatedAt)
 					<div class="col-md-7 col-sm-12  form-group has-feedback">
 						<input type="text" class="form-control has-feedback-left" asp-for="@Model.Name" placeholder="Ime*" required>
-						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-					</div>
-					<div class="col-md-5 col-sm-12  form-group has-feedback">
-						<input type="text" class="form-control has-feedback-left" asp-for="@Model.PartnerId" placeholder="Partner Id*">
 						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 					</div>
 					<div class="col-md-12 col-sm-12  form-group has-feedback">
@@ -40,6 +36,10 @@
 						<input type="text" class="form-control has-feedback-left" asp-for="@Model.MB" placeholder="Matični broj*" required>
 						<span class="fa fa-id-card form-control-feedback left" aria-hidden="true"></span>
 					</div>
+					<div class="col-md-12 col-sm-12  form-group has-feedback">
+						<input type="text" class="form-control has-feedback-left" asp-for="@Model.AccountNumber" placeholder="Račun*" required>
+						<span class="fa fa-map-marker-alt form-control-feedback left" aria-hidden="true"></span>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Snimi</button>
@@ -51,6 +51,6 @@
 </div>
 <script>
 	$(document).ready(function () {
-		$("#CreateOrUpdateCustomerDialogForm").validate({errorPlacement: function(error, element){}});
+		$("#CreateOrUpdateVendorDialogForm").validate({errorPlacement: function(error, element){}});
 	});
 </script>

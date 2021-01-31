@@ -1,4 +1,5 @@
 ﻿using MajoliFE.Business.Dtos;
+using System;
 using System.Collections.Generic;
 
 namespace MajoliFE.Business.Interfaces
@@ -14,5 +15,6 @@ namespace MajoliFE.Business.Interfaces
 
 		public void DeleteInvoice(int id);
 		public InvoiceReport GenerateInvoice(int invoiceId);
+		public InvoiceStatistics GetInvoiceStatistics(DateTime? dateFrom = null, DateTime? dateTo = null);
 	}
 }
