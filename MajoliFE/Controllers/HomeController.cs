@@ -341,7 +341,7 @@ namespace MajoliFE.Controllers
 				{
 					var result = _invoiceService.GenerateInvoice(invoiceId);
 					string handle = Guid.NewGuid().ToString();
-					TempData[handle] = Convert.ToBase64String(result.InvoiceReportData);
+					TempData[handle] = Convert.ToBase64String(result.ReportData);
 					var fileName = "Racun_" + result.CustomerName + "_" + DateTime.Now.ToShortDateString()+ ".xlsx";
 					var fileResult = new Models.FileResult() { FileGuid = handle, FileName = fileName };
 					return Json(Ok(fileResult));
@@ -359,6 +359,46 @@ namespace MajoliFE.Controllers
 		}
 
 		[HttpGet]
+		public IActionResult GenerateInvoicesReportForTimePeriod(string dateFrom, string dateTo)
+		{
+			
+				try
+				{
+					var result = _invoiceService.GenerateInvoicesReport(dateFrom, dateTo);
+					var fileName = "Racuni_za_period_" + dateFrom+ "_" + dateTo + ".xlsx";
+					string handle = Guid.NewGuid().ToString();
+					TempData[handle] = Convert.ToBase64String(result.ReportData);
+					var fileResult = new Models.FileResult() { FileGuid = handle, FileName = fileName };
+					return Json(Ok(fileResult));
+				}
+				catch (Exception ex)
+				{
+					return Error();
+				}
+
+		}
+		[HttpGet]
+		public IActionResult GenerateVendorInvoicesReportForTimePeriod(string dateFrom, string dateTo)
+		{
+
+			try
+			{
+				var result = _vendorInvoiceService.GenerateInvoicesReport(dateFrom, dateTo);
+				var fileName = "Ulazni_racuni_za_period_" + dateFrom + "_" + dateTo + ".xlsx";
+				string handle = Guid.NewGuid().ToString();
+				TempData[handle] = Convert.ToBase64String(result.ReportData);
+				var fileResult = new Models.FileResult() { FileGuid = handle, FileName = fileName };
+				return Json(Ok(fileResult));
+			}
+			catch (Exception ex)
+			{
+				return Error();
+			}
+
+		}
+
+
+		[HttpGet]
 		public ActionResult Download(string fileGuid, string fileName)
 		{
 			if (TempData[fileGuid] != null)
@@ -369,8 +409,6 @@ namespace MajoliFE.Controllers
 			}
 			else
 			{
-				// Problem - Log the error, generate a blank file,
-				//           redirect to another controller action - whatever fits with your application
 				return new EmptyResult();
 			}
 		}

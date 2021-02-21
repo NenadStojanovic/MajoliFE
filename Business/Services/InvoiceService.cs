@@ -5,6 +5,7 @@ using MajoliFE.Data.Data;
 using MajoliFE.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace MajoliFE.Business.Services
@@ -78,29 +79,34 @@ namespace MajoliFE.Business.Services
 			
 		}
 
+		public Report GenerateInvoicesReport(string dateFrom, string dateTo)
+		{
+			try
+			{
+				DateTime dateFromMapped = DateTime.Now.AddDays(-30);
+				DateTime dateToMapped = DateTime.Now;
+				if (dateFrom != null)
+				{
+				    dateFromMapped = DateTime.ParseExact(dateFrom, "dd.MM.yyyy", CultureInfo.CreateSpecificCulture("de-DE"));
+				}
+				if (dateTo != null)
+				{
+					dateToMapped = DateTime.ParseExact(dateTo, "dd.MM.yyyy", CultureInfo.CreateSpecificCulture("de-DE"));
+				}
+				var result = _reportGenerator.GenerateInvoicesReport(dateFromMapped, dateToMapped);
+				return result;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+		}
+
 		public InvoiceStatistics GetInvoiceStatistics(DateTime? dateFrom = null, DateTime? dateTo = null)
 		{
-			if(dateFrom == null)
-			{
-				dateFrom = DateTime.MinValue;
-			}
-			if(dateTo == null)
-			{
-				dateTo = DateTime.MaxValue;
-			}
-			InvoiceStatistics model = new InvoiceStatistics();
-			var invoces = _invoiceRepository.GetInvocesFromRange((DateTime)dateFrom, (DateTime)dateTo);
-			if(invoces != null && invoces.Count>0)
-			{
-				model.TotalNumOfInvoices = invoces.Count;
-				model.TotalNumOfIssuedInvoices = invoces.Where(x => x.IsIssued == true).ToList()?.Count??0;
-				model.TotalNumOfPaidInvoices = invoces.Where(x => x.IsPaid == true).ToList()?.Count ?? 0;
-				model.TotalAmount = invoces.Sum(x => x.Total);
-				model.TotalPDVAmount = invoces.Sum(x => x.PDV);
-				model.TotalBaseAmount = invoces.Sum(x => x.BaseTotal);
-				model.TotalPaidAmount = invoces.Sum(x => x.TotalPaid);
-			}
-			return model;
+			var result = _reportGenerator.GetInvoiceStatistics(dateFrom, dateTo);
+			return result;
 		}
 	}
 }

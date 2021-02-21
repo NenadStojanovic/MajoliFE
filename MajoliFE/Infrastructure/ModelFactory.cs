@@ -99,6 +99,8 @@ namespace MajoliFE.Infrastructure
 			var model = new VendorInvoicesViewModel() { VendorInvoices = vendoriInvoices};
 			model.VendorInvoices = model.VendorInvoices.OrderByDescending(x => x.Id).ToList();
 			var customers = _customersService.GetAll();
+			var invoiceStatistics = _vendorInvoiceService.GetVendorInvoiceStatistics();
+			model.VendorInvoiceStatistics = invoiceStatistics;
 			return model;
 		}
 

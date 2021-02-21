@@ -1,0 +1,68 @@
+﻿@{
+	string targetUrl = this.ViewData.ContainsKey("targetUrl") ? this.ViewData["targetUrl"].ToString() : string.Empty;
+}
+<div class="modal" id="DateRangeForInvoicesReport" tabindex="-1" role="dialog">
+	<form id="DateRangeForInvoicesReportForm">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" style="display: inline;">Odaberi opseg datuma za izveštaj</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body row">
+					<div class="col-md-12 col-sm-12 form-group">
+
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Datum od<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input class="form-control datepicker" type="text" id="dateFrom" name="dateFrom" value="@DateTime.Now.AddDays(-30).ToShortDateString()" required="required">
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12  form-group">
+						<label class="col-form-label col-md-3 col-sm-3  label-align">Datum do<span>*</span></label>
+						<div class="col-md-9 col-sm-9">
+							<input class="form-control datepicker" type="text" id="dateTo" name="dateTo" value="@DateTime.Now.ToShortDateString()" required="required">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" onclick="DownloadInvoicesReportAjax()" class="btn btn-success">Preuzmi</button>
+					<button type="button" class="btn btn-warning" data-dismiss="modal">Zatvori</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<input type="hidden" id="GenerateInvoicesReportForTimePeriodUrl" value="@Url.Action(targetUrl,"Home")" />
+<script>
+
+	$(document).ready(function () {
+		$("#DateRangeForInvoicesReportForm").validate();
+	});
+
+	function DownloadInvoicesReportAjax() {
+		$.blockUI();
+		var DateFrom = $('#dateFrom').val();
+		var DateTo = $('#dateTo').val();
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			url: $("#GenerateInvoicesReportForTimePeriodUrl").val(),
+			data: { dateFrom: DateFrom, dateTo: DateTo },
+			success: function (response) {
+				//var resp = JSON.parse(response);
+				$("#DateRangeForInvoicesReport").modal('toggle');
+				window.location = '/Home/Download?fileGuid=' + response.value.fileGuid
+					+ '&filename=' + response.value.fileName;
+			},
+			error: function (response) {
+				AlertError();
+			},
+			complete: function () {
+				$.unblockUI();
+			}
+		});
+	}
+
+</script>

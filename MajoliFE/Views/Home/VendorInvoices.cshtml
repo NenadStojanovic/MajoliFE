@@ -13,6 +13,7 @@
 			<div class="form-group pull-right top_search">
 				<div class="input-group">
 					<button id="addNewVendorInvoiceBtn" onclick="CreateOrUpdateVendorInvoice(0)" class="btn btn-primary" type="button">Dodaj novi</button>
+					<button data-toggle="modal" data-target="#DateRangeForInvoicesReport" class="btn btn-success" type="button">Preuzmi izveštaj</button>
 				</div>
 			</div>
 		</div>
@@ -44,23 +45,23 @@
 							@{var index = 1; }
 							@foreach (var vendorInvoice in Model.VendorInvoices)
 							{
-							<tr>
-								<td>@index</td>
-								<td>@vendorInvoice.Id</td>
-								<td>@vendorInvoice.Date.ToShortDateString()</td>
-								<td>@vendorInvoice.Vendor?.Name</td>
-								<td>@vendorInvoice.Total.ToString("N2")</td>
-								<td>@vendorInvoice.TotalPaid.ToString("N2")</td>
-								<td>@vendorInvoice.Model</td>
-								<td>@vendorInvoice.ReferenceNumber</td>
-								<td>@vendorInvoice.Vendor?.AccountNumber</td>
-								<td>@vendorInvoice.Note</td>
-								<td>
-									<button onclick="CreateOrUpdateVendorInvoice(@vendorInvoice.Id)" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button>
-									<button onclick="DeleteVendorInvoice(@vendorInvoice.Id)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
-								</td>
-							</tr>
-							index = index + 1;
+								<tr>
+									<td>@index</td>
+									<td>@vendorInvoice.Id</td>
+									<td>@vendorInvoice.Date.ToShortDateString()</td>
+									<td>@vendorInvoice.Vendor?.Name</td>
+									<td>@vendorInvoice.Total.ToString("N2")</td>
+									<td>@vendorInvoice.TotalPaid.ToString("N2")</td>
+									<td>@vendorInvoice.Model</td>
+									<td>@vendorInvoice.ReferenceNumber</td>
+									<td>@vendorInvoice.Vendor?.AccountNumber</td>
+									<td>@vendorInvoice.Note</td>
+									<td>
+										<button onclick="CreateOrUpdateVendorInvoice(@vendorInvoice.Id)" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button>
+										<button onclick="DeleteVendorInvoice(@vendorInvoice.Id)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
+									</td>
+								</tr>
+								index = index + 1;
 							}
 						</tbody>
 					</table>
@@ -68,11 +69,13 @@
 			</div>
 		</div>
 	</div>
+	@await Html.PartialAsync("_VendorInvoiceStatisticsPV", Model.VendorInvoiceStatistics);
 </div>
 <input type="hidden" id="DeleteVendorInvoiceUrl" value="@Url.Action("DeleteVendorInvoice","Home")" />
 <div id="CreateOrUpdateVendorInvoiceDialogHolder">
 
 </div>
+@Html.Partial("_DateRangeForInvoicesReport.cshtml", null, new ViewDataDictionary(this.Vi‌​ewData) { { "targetUrl", "GenerateVendorInvoicesReportForTimePeriod" } })
 @if (Model.ShowMessage)
 {
 	@Html.HiddenFor(m => m.Message);
