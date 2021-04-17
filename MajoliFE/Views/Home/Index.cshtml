@@ -9,6 +9,14 @@
 		font-style:normal !important;
 
 	}
+	.statisc_mask {
+		background-color: rgba(0,0,0,.5);
+		font-size: 27px;
+		color: white;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 </style>
 <div class="">
 	<div class="page-title">
@@ -38,13 +46,13 @@
 								<div class="thumbnail">
 									<div class="image view view-first">
 										<img style="width: 100%; display: block;" src="~/Content/build/images/media.jpg" alt="image">
-										<div class="mask">
-											<p>Klijenti</p>
+										<div class="statisc_mask">
+											<span>Klijenti</span>
 											@*<div class="tools tools-bottom">
-													<a href="#"><i class="fa fa-link"></i></a>
-													<a href="#"><i class="fa fa-pencil"></i></a>
-													<a href="#"><i class="fa fa-times"></i></a>
-												</div>*@
+									<a href="#"><i class="fa fa-link"></i></a>
+									<a href="#"><i class="fa fa-pencil"></i></a>
+									<a href="#"><i class="fa fa-times"></i></a>
+								</div>*@
 										</div>
 									</div>
 									<div class="caption">
@@ -58,13 +66,8 @@
 								<div class="thumbnail">
 									<div class="image view view-first">
 										<img style="width: 100%; display: block;" src="~/Content/build/images/media.jpg" alt="image">
-										<div class="mask">
-											<p>Računi</p>
-											@*<div class="tools tools-bottom">
-													<a href="#"><i class="fa fa-link"></i></a>
-													<a href="#"><i class="fa fa-pencil"></i></a>
-													<a href="#"><i class="fa fa-times"></i></a>
-												</div>*@
+										<div class="statisc_mask">
+											<span>Računi</span>
 										</div>
 									</div>
 									<div class="caption">
@@ -74,6 +77,38 @@
 							</div>
 						</a>
 					</div>
+					<div class="row">
+					<a href="@Url.Action("Vendors","Home")">
+						<div class="col-md-6">
+							<div class="thumbnail">
+								<div class="image view view-first">
+									<img style="width: 100%; display: block;" src="~/Content/build/images/media.jpg" alt="image">
+									<div class="statisc_mask">
+										<span>Dobavljači</span>
+									</div>
+								</div>
+								<div class="caption">
+									<p>Detaljnije...</p>
+								</div>
+							</div>
+						</div>
+					</a>
+					<a href="@Url.Action("VendorInvoices","Home")">
+						<div class="col-md-6">
+							<div class="thumbnail">
+								<div class="image view view-first">
+									<img style="width: 100%; display: block;" src="~/Content/build/images/media.jpg" alt="image">
+									<div class="statisc_mask">
+										<span>Ulazni Računi</span>
+									</div>
+								</div>
+								<div class="caption">
+									<p>Detaljnije...</p>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
 				</div>
 			</div>
 		</div>

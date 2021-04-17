@@ -129,7 +129,7 @@ namespace MajoliFE.Business.Services
 						ws.Cells[startRow, B].Value = invoice.Id;
 						ws.Cells[startRow, C].Value = invoice.InvoiceNumber;
 						ws.Cells[startRow, D].Value = invoice.DateIssued.ToShortDateString();
-						ws.Cells[startRow, E].Value = invoice.CurrencyDate.AddDays(invoice.CurrencyDateNumOfDays).ToShortDateString();
+						ws.Cells[startRow, E].Value = invoice.CurrencyDate.ToShortDateString();
 						ws.Cells[startRow, F].Value = invoice.Customer?.Name;
 						ws.Cells[startRow, G].Value = invoice.BaseTotal.ToString("N2");
 						ws.Cells[startRow, H].Value = invoice.PDV.ToString("N2");

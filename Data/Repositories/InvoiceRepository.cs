@@ -36,7 +36,7 @@ namespace MajoliFE.Data.Repositories
 
 		public List<Invoice> GetInvocesFromRange(DateTime dateFrom, DateTime dateTo)
 		{
-			var result = dbContext.Invoices.Where(x => x.DateIssued >= dateFrom && x.DateIssued <= dateTo).ToList();
+			var result = dbContext.Invoices.Where(x => x.DateIssued >= dateFrom && x.DateIssued <= dateTo).Include(x=>x.Customer).ToList();
 			return result;
 		}
 	}

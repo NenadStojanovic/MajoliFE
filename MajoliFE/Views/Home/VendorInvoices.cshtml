@@ -25,7 +25,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_content">
-					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -49,13 +49,13 @@
 									<td>@index</td>
 									<td>@vendorInvoice.Id</td>
 									<td>@vendorInvoice.Date.ToShortDateString()</td>
-									<td>@vendorInvoice.Vendor?.Name</td>
+									<td style="max-width:250px;">@vendorInvoice.Vendor?.Name</td>
 									<td>@vendorInvoice.Total.ToString("N2")</td>
 									<td>@vendorInvoice.TotalPaid.ToString("N2")</td>
 									<td>@vendorInvoice.Model</td>
 									<td>@vendorInvoice.ReferenceNumber</td>
 									<td>@vendorInvoice.Vendor?.AccountNumber</td>
-									<td>@vendorInvoice.Note</td>
+									<td style="max-width:250px;">@vendorInvoice.Note</td>
 									<td>
 										<button onclick="CreateOrUpdateVendorInvoice(@vendorInvoice.Id)" class="btn btn-primary" type="button"><i class="fa fa-edit"></i></button>
 										<button onclick="DeleteVendorInvoice(@vendorInvoice.Id)" class="btn btn-danger" type="button"><i class="fa fa-trash-alt"></i></button>
@@ -69,7 +69,7 @@
 			</div>
 		</div>
 	</div>
-	@await Html.PartialAsync("_VendorInvoiceStatisticsPV", Model.VendorInvoiceStatistics);
+	@await Html.PartialAsync("_VendorInvoiceStatisticsPV", Model.VendorInvoiceStatistics)
 </div>
 <input type="hidden" id="DeleteVendorInvoiceUrl" value="@Url.Action("DeleteVendorInvoice","Home")" />
 <div id="CreateOrUpdateVendorInvoiceDialogHolder">

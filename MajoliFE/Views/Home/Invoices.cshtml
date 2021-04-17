@@ -80,7 +80,7 @@
 						Pregled svih računa.
 					</p>
 
-					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -108,8 +108,8 @@
 									<td>@item.Id</td>
 									<td>@item.InvoiceNumber</td>
 									<td>@item.DateIssued.ToShortDateString()</td>
-									<td>@item.CurrencyDate.AddDays(item.CurrencyDateNumOfDays).ToShortDateString()</td>
-									<td>@item.Customer?.Name</td>
+									<td>@item.CurrencyDate.ToShortDateString()</td>
+									<td style="max-width:250px;">@item.Customer?.Name</td>
 									<td>@item.BaseTotal.ToString("N2")</td>
 									<td>@item.PDV.ToString("N2")</td>
 									<td>@item.Total.ToString("N2")</td>
